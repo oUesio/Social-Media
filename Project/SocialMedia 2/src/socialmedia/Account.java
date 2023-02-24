@@ -4,7 +4,6 @@ public class Account{
     private int accountID;
     private string handle;
     private string description;
-    //private int[] posts;
 
     public Account(string givenHandle, string givenDescription){
         accountID = numberOfAccounts;
@@ -28,10 +27,4 @@ public class Account{
     public string getHandle(){
         return handle;
     }
-
-    public int createPost(string givenMessage){
-
-    } 
-
-    //add/remove to post array methods
 }
