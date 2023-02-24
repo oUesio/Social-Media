@@ -9,7 +9,7 @@ public class test{
         System.out.println("Post 1 has ID:" + newPost.getPostID());
         System.out.println("Post 1 has Text:" + newPost.getText());
         Post newPost2 = new Post(0, "this is another post, another post");
-        System.out.println("Post 2 has ID:" + newPost.getPostID());
+        System.out.println("Post 2 has ID:" + newPost2.getPostID());
         System.out.println("Post 2 has Text:" + newPost2.getText());
     }
 }
