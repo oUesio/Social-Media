@@ -2,8 +2,8 @@ public class Account{
     
     private static int numberOfAccounts = 0;
     private int accountID;
-    private string handle;
-    private string description;
+    private String handle;
+    private String description;
 
     public Account(string givenHandle, string givenDescription){
         accountID = numberOfAccounts;
