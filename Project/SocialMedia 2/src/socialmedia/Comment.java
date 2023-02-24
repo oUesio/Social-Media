@@ -1,8 +1,10 @@
 
-public class Endorsement extends Post {
+//package socialmedia;
+
+public class Comment extends Post{
     private int postReferenceID;
 
-    public Endorsement(int accountID, String message, int postReferenceID) {
+    public Comment(int accountID, String message, int postReferenceID) {
         super(accountID, message);
         this.postReferenceID = postReferenceID;
     }
@@ -10,5 +12,7 @@ public class Endorsement extends Post {
     public int getPostReferenceID(){
         return postReferenceID;
     }
+    
+    //what is different to the endorsement?
     //do we do checks here to see if account/other info is valid?
 }

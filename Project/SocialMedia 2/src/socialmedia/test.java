@@ -11,5 +11,10 @@ public class test{
         Post newPost2 = new Post(0, "this is another post, another post");
         System.out.println("Post 2 has ID:" + newPost2.getPostID());
         System.out.println("Post 2 has Text:" + newPost2.getText());
+        Endorsement endorsement1 = new Endorsement(0, "Message to my first post", 0);
+        System.out.println("Endorsement 1 has ID:" + endorsement1.getPostID());
+        Comment comment1 = new Comment(0, null, 0);
+        System.out.println("Comment 1 has ID:" + comment1.getPostID());
+
     }
 }

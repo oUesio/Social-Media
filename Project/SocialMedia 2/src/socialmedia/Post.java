@@ -25,4 +25,6 @@ public class Post{
         return accountID;
     }
 
+    //needs to store the endorsements and comments here?
+    //do we do checks here to see if account/other info is valid?
 }
