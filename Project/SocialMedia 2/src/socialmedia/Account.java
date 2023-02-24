@@ -6,7 +6,7 @@ public class Account{
     private String description;
 
     public Account(String handle, String description){
-        this.handle = givenHandle;
+        this.handle = handle;
         this.description = description;
         accountID = numberOfAccounts;
         numberOfAccounts += 1;
