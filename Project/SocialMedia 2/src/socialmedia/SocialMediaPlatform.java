@@ -1,4 +1,3 @@
-package socialmedia;
 
 /**
  * SocialMediaPlatform interface. This interface is a more elaborated version of

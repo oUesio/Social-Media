@@ -2,7 +2,7 @@
 
 public class Post{
     private int postID;
-    public static int numberOfPosts;
+    protected int numberOfPosts = 0;
     private int accountID;
     private String text;
 
@@ -25,5 +25,4 @@ public class Post{
         return accountID;
     }
 
-    
 }

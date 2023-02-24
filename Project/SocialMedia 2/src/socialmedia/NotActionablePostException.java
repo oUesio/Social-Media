@@ -1,4 +1,3 @@
-package socialmedia;
 
 /**
  * Thrown when attempting to act upon an not-actionable post.

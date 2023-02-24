@@ -1,4 +1,3 @@
-package socialmedia;
 
 /**
  * Thrown when attempting to use an account ID that does not exit in the system.

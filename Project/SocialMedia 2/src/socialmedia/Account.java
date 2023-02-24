@@ -27,4 +27,8 @@ public class Account{
     public String getHandle(){
         return handle;
     }
+
+    public int getAccountID(){
+        return accountID;
+    }
 }

@@ -1,4 +1,3 @@
-package socialmedia;
 
 /**
  * Thrown when attempting to use a post ID that does not exit in the system.
