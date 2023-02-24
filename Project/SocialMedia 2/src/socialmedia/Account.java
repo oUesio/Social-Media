@@ -5,26 +5,26 @@ public class Account{
     private String handle;
     private String description;
 
-    public Account(string handle, string description){
+    public Account(String handle, String description){
         this.handle = givenHandle;
         this.description = description;
         accountID = numberOfAccounts;
         numberOfAccounts += 1;
     }
 
-    public void setDescription(string description){
+    public void setDescription(String description){
         this.description = description;
     }
     
-    public void setHandle(string newHandle){
-        handle = newHandle;
+    public void setHandle(String handle){
+        this.handle = handle;
     }
 
-    public string getDescription(){
+    public String getDescription(){
         return description;
     }
 
-    public string getHandle(){
+    public String getHandle(){
         return handle;
     }
 }
