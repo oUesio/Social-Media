@@ -5,15 +5,15 @@ public class Account{
     private String handle;
     private String description;
 
-    public Account(string givenHandle, string givenDescription){
+    public Account(string handle, string description){
+        this.handle = givenHandle;
+        this.description = description;
         accountID = numberOfAccounts;
         numberOfAccounts += 1;
-        handle = givenHandle;
-        description = givenDescription;
     }
 
-    public void setDescription(string newDescription){
-        givenDescription = newDescription;
+    public void setDescription(string description){
+        this.description = description;
     }
     
     public void setHandle(string newHandle){
