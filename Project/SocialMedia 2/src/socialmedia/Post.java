@@ -25,6 +25,6 @@ public class Post{
         return accountID;
     }
 
-    //needs to store the endorsements and comments here?
+    //needs to store the endorsements and comments here? If so, maybe have array in here that we add to every time a new post is made, for example newEndorsement(EndorsementPostID:0,...) new endorsement has ID of 1 for example, updateArrayOf(postID:0,newPostID:1)
     //do we do checks here to see if account/other info is valid?
 }
