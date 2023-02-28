@@ -5,19 +5,19 @@ public class Post{
     private int postID;
     protected static int numberOfPosts = 0;
     private int accountID;
-    private String text;
+    private String message;
     private ArrayList<Integer> endorsementsList = new ArrayList<Integer>();
     private ArrayList<Integer> commentsList = new ArrayList<Integer>(); 
 
     public Post(int accountID, String text){
         this.accountID = accountID;
-        this.text = text;
+        this.message = message;
         postID = numberOfPosts;
         numberOfPosts += 1;
     }
 
-    public String getText(){
-        return text;
+    public String getMessage(){
+        return message;
     }
 
     public int getPostID(){
