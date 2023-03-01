@@ -9,7 +9,7 @@ public class Post{
     private ArrayList<Integer> endorsementsList = new ArrayList<Integer>();
     private ArrayList<Integer> commentsList = new ArrayList<Integer>(); 
 
-    public Post(int accountID, String text){
+    public Post(int accountID, String message){
         this.accountID = accountID;
         this.message = message;
         postID = numberOfPosts;
@@ -36,13 +36,11 @@ public class Post{
     
     //These functions add the ID to the given list
     public void addEndorsementID(int endorsementID){ //to add endorsement ID to list of ID's as required (for the tree of posts)
-        Integer iInteger = Integer.valueOf(endorsementID);
-        endorsementsList.add(iInteger);
+        endorsementsList.add(Integer.valueOf(endorsementID));
     }
 
     public void addCommentID(int commentID){ //to add comment ID to list of ID's as required (for the tree of posts)
-        Integer iInteger = Integer.valueOf(commentID);
-        commentsList.add(iInteger);
+        commentsList.add(Integer.valueOf(commentID));
     }
 
 
