@@ -1,5 +1,7 @@
+package socialmedia;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * BadSocialMedia is a minimally compiling, but non-functioning implementor of
@@ -9,29 +11,28 @@ import java.io.IOException;
  * @version 1.0
  */
 public class BadSocialMedia implements SocialMediaPlatform {
+	private ArrayList<Account> accountsList = new ArrayList<Account>();
 
 	@Override
 	public int createAccount(String handle) throws IllegalHandleException, InvalidHandleException {
-		// TODO Auto-generated method stub
-		return 0;
+		accountsList.add(new Account(handle));
+		return accountsList.get(accountsList.size()-1).getAccountID();
 	}
 
 	@Override
 	public int createAccount(String handle, String description) throws IllegalHandleException, InvalidHandleException {
-		// TODO Auto-generated method stub
-		return 0;
+		accountsList.add(new Account(handle, description));
+		return accountsList.get(accountsList.size()-1).getAccountID();
 	}
 
 	@Override
 	public void removeAccount(int id) throws AccountIDNotRecognisedException {
-		// TODO Auto-generated method stub
-
+		accountsList.removeIf(acc -> (acc.getAccountID() == id));
 	}
 
 	@Override
 	public void removeAccount(String handle) throws HandleNotRecognisedException {
-		// TODO Auto-generated method stub
-
+		accountsList.removeIf(acc -> (acc.getHandle() == handle));
 	}
 
 	@Override
@@ -55,23 +56,35 @@ public class BadSocialMedia implements SocialMediaPlatform {
 
 	@Override
 	public int createPost(String handle, String message) throws HandleNotRecognisedException, InvalidPostException {
-		// TODO Auto-generated method stub
-		return 0;
+		for (int pos = 0; pos < accountsList.size(); pos++) {
+			if (accountsList.get(pos).getHandle() == handle) {
+				return accountsList.get(pos).createOriginalPost(message);
+			}
+		}
+		return -1; //temp value
 	}
 
 	@Override
 	public int endorsePost(String handle, int id)
 			throws HandleNotRecognisedException, PostIDNotRecognisedException, NotActionablePostException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+				for (int pos = 0; pos < accountsList.size(); pos++) {
+					if (accountsList.get(pos).getHandle() == handle) {
+						//return accountsList.get(pos).createEndorsement(id); 
+					}
+				}
+				return -1;
+			}
 
 	@Override
 	public int commentPost(String handle, int id, String message) throws HandleNotRecognisedException,
 			PostIDNotRecognisedException, NotActionablePostException, InvalidPostException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+				for (int pos = 0; pos < accountsList.size(); pos++) {
+					if (accountsList.get(pos).getHandle() == handle) {
+						return accountsList.get(pos).createComment(message, id);
+					}
+				}
+				return -1;
+			}
 
 	@Override
 	public void deletePost(int id) throws PostIDNotRecognisedException {
@@ -94,8 +107,7 @@ public class BadSocialMedia implements SocialMediaPlatform {
 
 	@Override
 	public int getNumberOfAccounts() {
-		// TODO Auto-generated method stub
-		return 0;
+		return accountsList.size();
 	}
 
 	@Override
