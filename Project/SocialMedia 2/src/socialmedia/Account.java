@@ -72,17 +72,4 @@ public class Account{
         commentsList.add(new Comment(accountID, message, postReferenceID));
         return commentsList.get(commentsList.size()-1).getPostID();
     }
-    
-    public ArrayList<Post> getPostsList(){
-        return originalPostList;
-    }
-
-    public ArrayList<Endorsement> getEndorsementsList(){
-        return endorsementsList;
-    }
-
-    public ArrayList<Comment> getCommentsList(){
-        return commentsList;
-    }
-
 }
