@@ -1,4 +1,3 @@
-
 package socialmedia;
 
 import java.util.ArrayList;
@@ -33,6 +32,21 @@ public class Comment extends Post{
         return commentsList;
     }
     
-    //what is different to the endorsement?
-    //do we do checks here to see if account/other info is valid?
+    public void removeEndorsementID(int endorsementID){
+        for (int pos = 0; pos < endorsementsList.size(); pos++) {
+            if (endorsementsList.get(pos) == endorsementID) {
+                endorsementsList.remove(pos);
+                break;
+            }
+        }
+    }
+
+    public void removeCommentID(int commentID){
+        for (int pos = 0; pos < commentsList.size(); pos++) {
+            if (commentsList.get(pos) == commentID) {
+                commentsList.remove(pos);
+                break;
+            }
+        }
+    }
 }
