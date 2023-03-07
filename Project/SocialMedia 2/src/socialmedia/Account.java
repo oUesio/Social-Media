@@ -72,4 +72,16 @@ public class Account{
         commentsList.add(new Comment(accountID, message, postReferenceID));
         return commentsList.get(commentsList.size()-1).getPostID();
     }
+    
+    public void removePostAt(int pos){
+        originalPostList.remove(pos);
+    }
+
+    public void removeEndorsementAt(int pos){
+        endorsementsList.remove(pos);
+    }
+
+    public void removeCommentAt(int pos){
+        commentsList.remove(pos);
+    }
 }
