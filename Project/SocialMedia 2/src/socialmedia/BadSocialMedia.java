@@ -94,7 +94,15 @@ public class BadSocialMedia implements SocialMediaPlatform {
 
 	@Override
 	public String showIndividualPost(int id) throws PostIDNotRecognisedException {
-		// TODO Auto-generated method stub
+		for (int pos = 0; pos < accountsList.size(); pos++) {
+			ArrayList<Post> postsList = accountsList.get(pos).getOriginalPosts();
+			for (int x = 0; x < postsList.size(); x++){
+				if (postsList.get(x).getPostID() == id){
+					return String.format("<pre>\nID: %d\nAccount: %s\nNo. endorsements: %s | No. comments: %s\n%s\n</pre>", id, accountsList.get(pos).getHandle(), accountsList.get(pos).getEndorsements().size(), accountsList.get(pos).getComments().size(), postsList.get(x).getMessage());
+				}
+				
+			}
+		}
 		return null;
 	}
 
@@ -111,9 +119,12 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	}
 
 	@Override
-	public int getTotalOriginalPosts() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getTotalOriginalPosts() { //when an account is deleted, delete it from the account so it is not counted here
+		int total = 0;
+		for (int pos = 0; pos < accountsList.size(); pos++) {
+			total += accountsList.get(pos).getOriginalPosts().size();
+		}
+		return total;
 	}
 
 	@Override
@@ -142,7 +153,7 @@ public class BadSocialMedia implements SocialMediaPlatform {
 
 	@Override
 	public void erasePlatform() {
-		// TODO Auto-generated method stub
+		accountsList.clear();
 
 	}
 
