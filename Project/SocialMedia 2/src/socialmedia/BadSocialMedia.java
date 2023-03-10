@@ -100,7 +100,29 @@ public class BadSocialMedia implements SocialMediaPlatform {
 				if (postsList.get(x).getPostID() == id){
 					return String.format("<pre>\nID: %d\nAccount: %s\nNo. endorsements: %s | No. comments: %s\n%s\n</pre>", id, accountsList.get(pos).getHandle(), accountsList.get(pos).getEndorsements().size(), accountsList.get(pos).getComments().size(), postsList.get(x).getMessage());
 				}
-				
+			}
+			ArrayList<Comment> commentsList = accountsList.get(pos).getComments();
+			for (int x = 0; x < commentsList.size(); x++){ //for every comment in comments list
+				if (commentsList.get(x).getPostID() == id){ //if the comment has the ID we are looking for
+	//keeping just in case can't get other way working:
+					//int totalComments = 0; //(total comment number for later)
+					//for (int pos2 = 0; pos2 < accountsList.size(); pos2++) {
+						//ArrayList<Comment> commentsList2 = accountsList.get(pos2).getComments();
+						//for (int y = 0; y < commentsList2.size(); y++){ //check every comment for every account
+							//if (commentsList2.get(y).getPostReferenceID() == commentsList.get(x).getPostID()){ //if the reference id is the same as the comment ID, increment counter by 1
+								//totalComments+= 1; //just realised all of this is useless as I can just do commentsList.get(x).getCommentsList().size()!!!!!!!!!!!!!!! (slightly frustrated)
+							//}
+						//}
+					//}
+					//would have to repeat for endorsements too, creating horribly inefficient code.
+					return String.format("<pre>\nID: %d\nAccount: %s\nNo. endorsements: %s | No. comments: %s\n%s\n</pre>", id, accountsList.get(pos).getHandle(), commentsList.get(x).getEndorsementsList().size(), commentsList.get(x).getCommentsList().size(), commentsList.get(x).getMessage());
+				}
+			}
+			ArrayList<Endorsement> endorsementsList = accountsList.get(pos).getEndorsements();
+			for (int x = 0; x < endorsementsList.size(); x++){
+				if (endorsementsList.get(x).getPostID() == id){
+					return String.format("<pre>\nID: %d\nAccount: %s\nNo. endorsements: %s N/A | No. comments: %s N/A\n%s\n</pre>", id, accountsList.get(pos).getHandle(), 0, 0, endorsementsList.get(x).getMessage());
+				}
 			}
 		}
 		return null;
@@ -128,27 +150,66 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	}
 
 	@Override
-	public int getTotalEndorsmentPosts() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getTotalEndorsmentPosts() { //attempt
+		int total = 0;
+		for (int pos = 0; pos < accountsList.size(); pos++) {
+			total += accountsList.get(pos).getEndorsements().size();
+		}
+		return total;
 	}
 
 	@Override
-	public int getTotalCommentPosts() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getTotalCommentPosts() { //attempt
+		int total = 0;
+		for (int pos = 0; pos < accountsList.size(); pos++) {
+			total += accountsList.get(pos).getComments().size();
+		}
+		return total;
 	}
 
 	@Override
-	public int getMostEndorsedPost() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getMostEndorsedPost() { //attempt
+		int largestNumber = 0;
+		int mostEndorsedPostID = -1;
+		for (int pos = 0; pos < accountsList.size(); pos++) { //for all accounts, check the OG posts list
+			ArrayList<Post> postsList = accountsList.get(pos).getOriginalPosts();
+			for (int x = 0; x < postsList.size(); x++){
+				if (postsList.get(x).getEndorsementsList().size() > largestNumber){
+					largestNumber = postsList.get(x).getEndorsementsList().size();
+					mostEndorsedPostID = postsList.get(x).getPostID();
+				}
+			}
+			ArrayList<Comment> commentsList = accountsList.get(pos).getComments(); //also check the comments list
+			for (int x = 0; x < commentsList.size(); x++){
+				if (commentsList.get(x).getEndorsementsList().size() > largestNumber){
+					largestNumber = commentsList.get(x).getEndorsementsList().size();
+					mostEndorsedPostID = commentsList.get(x).getPostID();
+				}
+			}
+		}
+		return mostEndorsedPostID;
 	}
 
 	@Override
 	public int getMostEndorsedAccount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int maxNumberOfEndorsements = 0;
+		int mostEndorsedID = -1;
+		for (int pos = 0; pos < accountsList.size(); pos++) {
+			int numberOfEndorsements = 0;
+			ArrayList<Post> postsList = accountsList.get(pos).getOriginalPosts();
+			for (int x = 0; x < postsList.size(); x++){
+				numberOfEndorsements += postsList.get(x).getEndorsementsList().size();
+			}
+			ArrayList<Comment> commentsList = accountsList.get(pos).getComments();
+			for (int x = 0; x < commentsList.size(); x++){
+				numberOfEndorsements += commentsList.get(x).getEndorsementsList().size();
+			}
+			if (numberOfEndorsements > maxNumberOfEndorsements){
+				maxNumberOfEndorsements = numberOfEndorsements;
+				mostEndorsedID = accountsList.get(pos).getAccountID();
+			}
+		}
+		return mostEndorsedID;
 	}
 
 	@Override
