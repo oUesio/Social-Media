@@ -150,7 +150,7 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	}
 
 	@Override
-	public int getTotalEndorsmentPosts() { //attempt
+	public int getTotalEndorsmentPosts() {
 		int total = 0;
 		for (int pos = 0; pos < accountsList.size(); pos++) {
 			total += accountsList.get(pos).getEndorsements().size();
@@ -159,7 +159,7 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	}
 
 	@Override
-	public int getTotalCommentPosts() { //attempt
+	public int getTotalCommentPosts() {
 		int total = 0;
 		for (int pos = 0; pos < accountsList.size(); pos++) {
 			total += accountsList.get(pos).getComments().size();
@@ -168,7 +168,7 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	}
 
 	@Override
-	public int getMostEndorsedPost() { //attempt
+	public int getMostEndorsedPost() {
 		int largestNumber = 0;
 		int mostEndorsedPostID = -1;
 		for (int pos = 0; pos < accountsList.size(); pos++) { //for all accounts, check the OG posts list
