@@ -130,17 +130,6 @@ public class BadSocialMedia implements SocialMediaPlatform {
 			ArrayList<Comment> commentsList = accountsList.get(pos).getComments();
 			for (int x = 0; x < commentsList.size(); x++){ //for every comment in comments list
 				if (commentsList.get(x).getPostID() == id){ //if the comment has the ID we are looking for
-	//keeping just in case can't get other way working:
-					//int totalComments = 0; //(total comment number for later)
-					//for (int pos2 = 0; pos2 < accountsList.size(); pos2++) {
-						//ArrayList<Comment> commentsList2 = accountsList.get(pos2).getComments();
-						//for (int y = 0; y < commentsList2.size(); y++){ //check every comment for every account
-							//if (commentsList2.get(y).getPostReferenceID() == commentsList.get(x).getPostID()){ //if the reference id is the same as the comment ID, increment counter by 1
-								//totalComments+= 1; //just realised all of this is useless as I can just do commentsList.get(x).getCommentsList().size()!!!!!!!!!!!!!!! (slightly frustrated)
-							//}
-						//}
-					//}
-					//would have to repeat for endorsements too, creating horribly inefficient code.
 					return String.format("<pre>\nID: %d\nAccount: %s\nNo. endorsements: %s | No. comments: %s\n%s\n</pre>", id, accountsList.get(pos).getHandle(), commentsList.get(x).getEndorsementsList().size(), commentsList.get(x).getCommentsList().size(), commentsList.get(x).getMessage());
 				}
 			}
