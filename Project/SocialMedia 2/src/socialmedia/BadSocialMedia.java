@@ -69,7 +69,20 @@ public class BadSocialMedia implements SocialMediaPlatform {
 			throws HandleNotRecognisedException, PostIDNotRecognisedException, NotActionablePostException {
 				for (int pos = 0; pos < accountsList.size(); pos++) {
 					if (accountsList.get(pos).getHandle() == handle) {
-						//return accountsList.get(pos).createEndorsement(id); 
+						int endorseID = accountsList.get(pos).createEndorsement(accountsList.get(pos).getDescription(), id); //id of endorsement
+						for (Account acc : accountsList) {
+							int foundPostIDPos = acc.searchPost(id);
+							if (foundPostIDPos != -1) {
+								acc.addEndorseIDtoPostAt(foundPostIDPos, endorseID);
+								break;
+							}
+							int foundCommentIDPos = acc.searchComment(id);
+							if (foundCommentIDPos != -1) {
+								acc.addEndorseIDtoCommentAt(foundCommentIDPos, endorseID);
+								break;
+							}
+						}
+						return endorseID;
 					}
 				}
 				return -1;
@@ -80,7 +93,20 @@ public class BadSocialMedia implements SocialMediaPlatform {
 			PostIDNotRecognisedException, NotActionablePostException, InvalidPostException {
 				for (int pos = 0; pos < accountsList.size(); pos++) {
 					if (accountsList.get(pos).getHandle() == handle) {
-						return accountsList.get(pos).createComment(message, id);
+						int commentID =  accountsList.get(pos).createComment(message, id);
+						for (Account acc : accountsList) {
+							int foundPostIDPos = acc.searchPost(id);
+							if (foundPostIDPos != -1) {
+								acc.addCommentIDtoPostAt(foundPostIDPos, commentID);
+								break;
+							}
+							int foundCommentIDPos = acc.searchComment(id);
+							if (foundCommentIDPos != -1) {
+								acc.addCommentIDtoCommentAt(foundCommentIDPos, commentID);
+								break;
+							}
+						}
+						return commentID;
 					}
 				}
 				return -1;
