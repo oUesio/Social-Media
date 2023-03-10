@@ -68,7 +68,7 @@ public class Account{
         return endorsementsList.get(endorsementsList.size()-1).getPostID();
     }
 
-    public int createComment(String message, int postReferenceID) {
+    public int createComment(String message, int postReferenceID) { //add to comment list of post being posted to
         commentsList.add(new Comment(accountID, message, postReferenceID));
         return commentsList.get(commentsList.size()-1).getPostID();
     }
