@@ -63,7 +63,7 @@ public class Account{
         return originalPostList.get(originalPostList.size()-1).getPostID();
     }
 
-    public int createEndorsement(String message, int postReferenceID) {
+    public int createEndorsement(String message, int postReferenceID) { //add to endorsement list of post being posted to
         endorsementsList.add(new Endorsement(accountID, message, postReferenceID));
         return endorsementsList.get(endorsementsList.size()-1).getPostID();
     }
