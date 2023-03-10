@@ -63,12 +63,12 @@ public class Account{
         return originalPostList.get(originalPostList.size()-1).getPostID();
     }
 
-    public int createEndorsement(String message, int postReferenceID) { //add to endorsement list of post being posted to
+    public int createEndorsement(String message, int postReferenceID) {
         endorsementsList.add(new Endorsement(accountID, message, postReferenceID));
         return endorsementsList.get(endorsementsList.size()-1).getPostID();
     }
 
-    public int createComment(String message, int postReferenceID) { //add to comment list of post being posted to
+    public int createComment(String message, int postReferenceID) {
         commentsList.add(new Comment(accountID, message, postReferenceID));
         return commentsList.get(commentsList.size()-1).getPostID();
     }
@@ -83,5 +83,49 @@ public class Account{
 
     public void removeCommentAt(int pos){
         commentsList.remove(pos);
+    }
+    
+    
+    public int searchPost(int id) {
+        for (int pos = 0; pos < originalPostList.size(); pos++) {
+            if (originalPostList.get(pos).getPostID() == id) {
+                return pos;
+            }
+        }
+        return -1;
+    }
+
+    public int searchEndorsement(int id) {
+        for (int pos = 0; pos < endorsementsList.size(); pos++) {
+            if (endorsementsList.get(pos).getPostID() == id) {
+                return pos;
+            }
+        }
+        return -1;
+    }
+
+    public int searchComment(int id) {
+        for (int pos = 0; pos < commentsList.size(); pos++) {
+            if (commentsList.get(pos).getPostID() == id) {
+                return pos;
+            }
+        }
+        return -1;
+    }
+
+    public void addCommentIDtoPostAt(int pos, int commentID) {
+        originalPostList.get(pos).addCommentID(commentID);
+    }
+
+    public void addEndorseIDtoPostAt(int pos, int endorseID) {
+        originalPostList.get(pos).addEndorsementID(endorseID);
+    }
+
+    public void addCommentIDtoCommentAt(int pos, int commentID) {
+        commentsList.get(pos).addCommentID(commentID);
+    }
+
+    public void addEndorseIDtoCommentAt(int pos, int endorseID) {
+        commentsList.get(pos).addEndorsementID(endorseID);
     }
 }
