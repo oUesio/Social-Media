@@ -1,7 +1,9 @@
-package socialmedia;
+//package socialmedia;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.print.attribute.standard.NumberOfDocuments;
 
 /**
  * BadSocialMedia is a minimally compiling, but non-functioning implementor of
@@ -136,7 +138,7 @@ public class BadSocialMedia implements SocialMediaPlatform {
 			ArrayList<Endorsement> endorsementsList = accountsList.get(pos).getEndorsements();
 			for (int x = 0; x < endorsementsList.size(); x++){
 				if (endorsementsList.get(x).getPostID() == id){
-					return String.format("<pre>\nID: %d\nAccount: %s\nNo. endorsements: %s N/A | No. comments: %s N/A\n%s\n</pre>", id, accountsList.get(pos).getHandle(), 0, 0, endorsementsList.get(x).getMessage());
+					return String.format("<pre>\nID: %d\nAccount: %s\nNo. endorsements: %s N/A | No. comments: %s N/A\n%s\n</pre>", id, accountsList.get(pos).getHandle(), 0, 0, "N/A");
 				}
 			}
 		}
