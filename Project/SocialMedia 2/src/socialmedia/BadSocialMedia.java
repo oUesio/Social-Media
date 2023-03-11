@@ -146,7 +146,7 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	}
 
 	@Override
-	public StringBuilder showPostChildrenDetails(int id) //so long
+	public StringBuilder showPostChildrenDetails(int id)
 			throws PostIDNotRecognisedException, NotActionablePostException {
 		// TODO Auto-generated method stub
 		return null;
@@ -185,7 +185,7 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	}
 
 	@Override
-	public int getMostEndorsedPost() { //cannot check yet, endorsements not working, may have to replace the "postsList.get(x).getEndorsementsList().size()"/similar lines with something more if not done as needed
+	public int getMostEndorsedPost() {
 		int largestNumber = 0;
 		int mostEndorsedPostID = -1;
 		for (int pos = 0; pos < accountsList.size(); pos++) { //for all accounts, check the OG posts list
@@ -208,7 +208,7 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	}
 
 	@Override
-	public int getMostEndorsedAccount() { //cannot check yet, endorsements not working
+	public int getMostEndorsedAccount() {
 		int maxNumberOfEndorsements = 0;
 		int mostEndorsedID = -1;
 		for (int pos = 0; pos < accountsList.size(); pos++) {
