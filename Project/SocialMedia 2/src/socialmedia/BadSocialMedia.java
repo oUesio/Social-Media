@@ -14,6 +14,7 @@ import javax.print.attribute.standard.NumberOfDocuments;
  */
 public class BadSocialMedia implements SocialMediaPlatform {
 	private ArrayList<Account> accountsList = new ArrayList<Account>();
+	private ArrayList<DeletedPost> deletedPostsList = new ArrayList<DeletedPost>();
 
 	@Override
 	public int createAccount(String handle) throws IllegalHandleException, InvalidHandleException {
