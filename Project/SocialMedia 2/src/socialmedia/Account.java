@@ -128,4 +128,20 @@ public class Account{
     public void addEndorseIDtoCommentAt(int pos, int endorseID) {
         commentsList.get(pos).addEndorsementID(endorseID);
     }
+    
+    public void removeCommentIDinPostAt(int pos, int commentID) {
+        originalPostList.get(pos).removeCommentID(commentID);;
+    }
+
+    public void removeEndorseIDinPostAt(int pos, int endorseID) {
+        originalPostList.get(pos).removeEndorsementID(endorseID);
+    }
+
+    public void removeCommentIDinCommentAt(int pos, int commentID) {
+        commentsList.get(pos).removeCommentID(commentID);
+    }
+
+    public void remonEndorseIDinCommentAt(int pos, int endorseID) {
+        commentsList.get(pos).removeEndorsementID(endorseID);;
+    }
 }
