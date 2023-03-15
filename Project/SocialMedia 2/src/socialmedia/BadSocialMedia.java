@@ -333,6 +333,7 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	@Override
 	public void erasePlatform() { //???
 		accountsList.clear();
+		indentationNumber = -1;
 
 	}
 
