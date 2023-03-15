@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class DeletedPost {
     private int postID; //postID of old post
     private ArrayList<Integer> commentsList; //comments of the old post
-    private String message = "The original content was removed from the system and is no longer available.";
+    protected String message = "The original content was removed from the system and is no longer available.";
 
     public DeletedPost(int postID, ArrayList<Integer> commentsList){
         this.postID = postID;
@@ -24,12 +24,16 @@ public class DeletedPost {
         return commentsList;
     }
 
-    public void removeCommentID(int commentID){
+    public int searchComment(int id) {
         for (int pos = 0; pos < commentsList.size(); pos++) {
-            if (commentsList.get(pos) == commentID) {
-                commentsList.remove(pos);
-                break;
+            if (commentsList.get(pos) == id) {
+                return pos;
             }
         }
+        return -1;
+    }
+
+    public void removeCommentIDAt(int pos){
+        commentsList.remove(pos);
     }
 }
