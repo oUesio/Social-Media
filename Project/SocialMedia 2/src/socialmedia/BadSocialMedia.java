@@ -146,10 +146,110 @@ public class BadSocialMedia implements SocialMediaPlatform {
 		return null;
 	}
 
+	private int indentationNumber = -1;
 	@Override
-	public StringBuilder showPostChildrenDetails(int id)
-			throws PostIDNotRecognisedException, NotActionablePostException {
-		// TODO Auto-generated method stub
+	public StringBuilder showPostChildrenDetails(int id) //so long
+			throws PostIDNotRecognisedException, NotActionablePostException {	
+		indentationNumber += 1;
+		ArrayList<Integer> elementsList = new ArrayList<Integer>();
+		for (int pos = 0; pos < accountsList.size(); pos++) {
+			ArrayList<Post> postsList = accountsList.get(pos).getOriginalPosts();
+			for (int x = 0; x < postsList.size(); x++){
+				if (postsList.get(x).getPostID() == id){
+					//Adding to the string builder (Very long and have to have thrice here...)
+					StringBuilder string = new StringBuilder();
+					String tab = "\t";
+					int changeableIndentationNumber = indentationNumber;
+					if (changeableIndentationNumber == 0){
+						string.append("<pre>");
+					}
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					if (changeableIndentationNumber != 0){
+						string.append("|");
+					}
+					string.append("> ID:");
+					string.append(Integer.toString(id) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("Account: " + Integer.toString(postsList.get(x).getAccountID()) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("No. endorsements: " + Integer.toString(accountsList.get(pos).getEndorsements().size()) + " | No. comments: " + Integer.toString(accountsList.get(pos).getComments().size()) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append(postsList.get(x).getMessage() + "\n |");
+
+					for (int y = 0; y < postsList.get(x).getCommentsList().size(); y++){
+						ArrayList<Integer> childElementsList = postsList.get(x).getCommentsList();
+						for (int z = 0; z < childElementsList.size(); z++){
+							string.append(showPostChildrenDetails(childElementsList.get(z)));
+						}
+					}
+					indentationNumber -= 1;
+					return string;
+				}
+			}
+			ArrayList<Comment> commentsList = accountsList.get(pos).getComments();
+			for (int x = 0; x < commentsList.size(); x++){ //for every comment in comments list
+				if (commentsList.get(x).getPostID() == id){ //if the comment has the ID we are looking for
+					StringBuilder string = new StringBuilder();
+					String tab = "\t";
+					int changeableIndentationNumber = indentationNumber;
+					if (changeableIndentationNumber == 0){
+						string.append("<pre>");
+					}
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					if (changeableIndentationNumber != 0){
+						string.append("|");
+					}
+					string.append(" > ID:");
+					string.append(Integer.toString(id) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("Account: " + Integer.toString(commentsList.get(x).getAccountID()) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("No. endorsements: " + Integer.toString(accountsList.get(pos).getEndorsements().size()) + " | No. comments: " + Integer.toString(accountsList.get(pos).getComments().size()) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append(commentsList.get(x).getMessage() + "\n |");
+
+					for (int y = 0; y < commentsList.get(x).getCommentsList().size(); y++){
+						ArrayList<Integer> childElementsList = commentsList.get(x).getCommentsList();
+						for (int z = 0; z < childElementsList.size(); z++){
+							string.append(showPostChildrenDetails(childElementsList.get(z)));
+						}
+					}
+					indentationNumber -= 1;
+					return string;
+				}
+			}
+		}
 		return null;
 	}
 
