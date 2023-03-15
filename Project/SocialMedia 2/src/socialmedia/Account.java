@@ -141,7 +141,7 @@ public class Account{
         commentsList.get(pos).removeCommentID(commentID);
     }
 
-    public void remonEndorseIDinCommentAt(int pos, int endorseID) {
+    public void removeEndorseIDinCommentAt(int pos, int endorseID) {
         commentsList.get(pos).removeEndorsementID(endorseID);;
     }
 }
