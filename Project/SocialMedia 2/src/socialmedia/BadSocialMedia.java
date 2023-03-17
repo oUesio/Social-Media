@@ -283,6 +283,12 @@ public class BadSocialMedia implements SocialMediaPlatform {
 		for (int pos = 0; pos < accountsList.size(); pos++) {
 			total += accountsList.get(pos).getComments().size();
 		}
+		for (int pos = 0; pos < deletedPostsList.size(); pos++) {
+			total += deletedPostsList.get(pos).getCommentsList().size();
+		}
+		for (int pos = 0; pos < deletedCommentsList.size(); pos++) {
+			total += deletedCommentsList.get(pos).getCommentsList().size();
+		}
 		return total;
 	}
 
