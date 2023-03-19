@@ -381,17 +381,11 @@ public class BadSocialMedia implements SocialMediaPlatform {
 		for (int pos = 0; pos < accountsList.size(); pos++) {
 			total += accountsList.get(pos).getComments().size();
 		}
-		for (int pos = 0; pos < deletedPostsList.size(); pos++) {
-			total += deletedPostsList.get(pos).getCommentsList().size();
-		}
-		for (int pos = 0; pos < deletedCommentsList.size(); pos++) {
-			total += deletedCommentsList.get(pos).getCommentsList().size();
-		}
 		return total;
 	}
 
 	@Override
-	public int getMostEndorsedPost() {
+	public int getMostEndorsedPost() { //cannot check yet, endorsements not working, may have to replace the "postsList.get(x).getEndorsementsList().size()"/similar lines with something more if not done as needed
 		int largestNumber = 0;
 		int mostEndorsedPostID = -1;
 		for (int pos = 0; pos < accountsList.size(); pos++) { //for all accounts, check the OG posts list
@@ -414,7 +408,7 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	}
 
 	@Override
-	public int getMostEndorsedAccount() {
+	public int getMostEndorsedAccount() { //cannot check yet, endorsements not working
 		int maxNumberOfEndorsements = 0;
 		int mostEndorsedID = -1;
 		for (int pos = 0; pos < accountsList.size(); pos++) {
@@ -438,8 +432,6 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	@Override
 	public void erasePlatform() { //???
 		accountsList.clear();
-		indentationNumber = -1;
-
 	}
 
 	@Override
