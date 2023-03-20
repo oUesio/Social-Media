@@ -246,55 +246,77 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	}
 
 	private int indentationNumber = -1;
+	private ArrayList<Integer> checkedElements = new ArrayList<Integer>();
 	@Override
-	public StringBuilder showPostChildrenDetails(int id) //so long
-			throws PostIDNotRecognisedException, NotActionablePostException {	
+	public StringBuilder showPostChildrenDetails(int id)
+			throws PostIDNotRecognisedException, NotActionablePostException {
+		StringBuilder string = new StringBuilder();
+		string.append("<pre>\n");
+		string.append(recursiveApproach(id));
+		string.append("\n</pre>");
+		indentationNumber = -1;
+		checkedElements.clear();
+		return string;
+	}
+	public StringBuilder recursiveApproach(int id){
 		indentationNumber += 1;
-		ArrayList<Integer> elementsList = new ArrayList<Integer>();
+		//ArrayList<Integer> elementsList = new ArrayList<Integer>();
 		for (int pos = 0; pos < accountsList.size(); pos++) {
 			ArrayList<Post> postsList = accountsList.get(pos).getOriginalPosts();
 			for (int x = 0; x < postsList.size(); x++){
-				if (postsList.get(x).getPostID() == id){
+				if (postsList.get(x).getPostID() == id && !checkedElements.contains(id)){
+					checkedElements.add(id);
 					//Adding to the string builder (Very long and have to have thrice here...)
 					StringBuilder string = new StringBuilder();
 					String tab = "\t";
 					int changeableIndentationNumber = indentationNumber;
-					if (changeableIndentationNumber == 0){
-						string.append("<pre>");
+					changeableIndentationNumber = indentationNumber;
+					if (changeableIndentationNumber != 0){
+						string.append("\n");
 					}
 					changeableIndentationNumber = indentationNumber;
 					while (changeableIndentationNumber > 1){
 						string.append(tab);
 						changeableIndentationNumber -= 1;
 					}
-					if (changeableIndentationNumber != 0){
-						string.append("|");
-					}
-					string.append("> ID:");
+					string.append("ID:");
 					string.append(Integer.toString(id) + "\n");
 					changeableIndentationNumber = indentationNumber;
-					while (changeableIndentationNumber > 1){
+					while (changeableIndentationNumber > 0){
 						string.append(tab);
 						changeableIndentationNumber -= 1;
 					}
 					string.append("Account: " + Integer.toString(postsList.get(x).getAccountID()) + "\n");
 					changeableIndentationNumber = indentationNumber;
-					while (changeableIndentationNumber > 1){
+					while (changeableIndentationNumber > 0){
 						string.append(tab);
 						changeableIndentationNumber -= 1;
 					}
-					string.append("No. endorsements: " + Integer.toString(accountsList.get(pos).getEndorsements().size()) + " | No. comments: " + Integer.toString(accountsList.get(pos).getComments().size()) + "\n");
+					string.append("No. endorsements: " + Integer.toString(postsList.get(x).getEndorsementsList().size()) + " | No. comments: " + Integer.toString(postsList.get(x).getCommentsList().size()) + "\n");
 					changeableIndentationNumber = indentationNumber;
-					while (changeableIndentationNumber > 1){
+					while (changeableIndentationNumber > 0){
 						string.append(tab);
 						changeableIndentationNumber -= 1;
 					}
-					string.append(postsList.get(x).getMessage() + "\n |");
+					string.append(postsList.get(x).getMessage());
 
 					for (int y = 0; y < postsList.get(x).getCommentsList().size(); y++){
 						ArrayList<Integer> childElementsList = postsList.get(x).getCommentsList();
 						for (int z = 0; z < childElementsList.size(); z++){
-							string.append(showPostChildrenDetails(childElementsList.get(z)));
+							changeableIndentationNumber = indentationNumber;
+							if (changeableIndentationNumber != 0){
+								string.append("\n");
+							}
+							changeableIndentationNumber = indentationNumber + 1;
+							while (changeableIndentationNumber > 1){
+								string.append(tab);
+								changeableIndentationNumber -= 1;
+							}
+							changeableIndentationNumber = indentationNumber;
+							if (changeableIndentationNumber != 0){
+								string.append("|");
+							}
+							string.append(recursiveApproach(childElementsList.get(z)));
 						}
 					}
 					indentationNumber -= 1;
@@ -303,45 +325,91 @@ public class BadSocialMedia implements SocialMediaPlatform {
 			}
 			ArrayList<Comment> commentsList = accountsList.get(pos).getComments();
 			for (int x = 0; x < commentsList.size(); x++){ //for every comment in comments list
-				if (commentsList.get(x).getPostID() == id){ //if the comment has the ID we are looking for
+				if (commentsList.get(x).getPostID() == id && !checkedElements.contains(id)){ //if the comment has the ID we are looking for
+					checkedElements.add(id);
 					StringBuilder string = new StringBuilder();
 					String tab = "\t";
 					int changeableIndentationNumber = indentationNumber;
-					if (changeableIndentationNumber == 0){
-						string.append("<pre>");
+					if (indentationNumber != 0){
+						changeableIndentationNumber = indentationNumber;
+						if (changeableIndentationNumber != 0){
+							string.append("\n");
+						}
+						changeableIndentationNumber = indentationNumber;
+						while (changeableIndentationNumber > 1){
+							string.append(tab);
+							changeableIndentationNumber -= 1;
+						}
+						string.append("|" + tab + "> ID:");
+						string.append(Integer.toString(id) + "\n");
+						changeableIndentationNumber = indentationNumber;
+						while (changeableIndentationNumber > 1){
+							string.append(tab);
+							changeableIndentationNumber -= 1;
+						}
+						string.append(tab + "Account: " + Integer.toString(commentsList.get(x).getAccountID()) + "\n");
+						changeableIndentationNumber = indentationNumber;
+						while (changeableIndentationNumber > 1){
+							string.append(tab);
+							changeableIndentationNumber -= 1;
+						}
+						string.append(tab + "No. endorsements: " + Integer.toString(commentsList.get(x).getEndorsementsList().size()) + " | No. comments: " + Integer.toString(commentsList.get(x).getCommentsList().size()) + "\n");
+						changeableIndentationNumber = indentationNumber;
+						while (changeableIndentationNumber > 1){
+							string.append(tab);
+							changeableIndentationNumber -= 1;
+						}
+						string.append(tab + commentsList.get(x).getMessage());
 					}
-					while (changeableIndentationNumber > 1){
-						string.append(tab);
-						changeableIndentationNumber -= 1;
+					if (indentationNumber == 0){
+						changeableIndentationNumber = indentationNumber;
+						if (changeableIndentationNumber != 0){
+							string.append("\n");
+						}
+						changeableIndentationNumber = indentationNumber;
+						while (changeableIndentationNumber > 1){
+							string.append(tab);
+							changeableIndentationNumber -= 1;
+						}
+						string.append("ID:");
+						string.append(Integer.toString(id) + "\n");
+						changeableIndentationNumber = indentationNumber;
+						while (changeableIndentationNumber > 1){
+							string.append(tab);
+							changeableIndentationNumber -= 1;
+						}
+						string.append("Account: " + Integer.toString(commentsList.get(x).getAccountID()) + "\n");
+						changeableIndentationNumber = indentationNumber;
+						while (changeableIndentationNumber > 1){
+							string.append(tab);
+							changeableIndentationNumber -= 1;
+						}
+						string.append("No. endorsements: " + Integer.toString(commentsList.get(x).getEndorsementsList().size()) + " | No. comments: " + Integer.toString(commentsList.get(x).getCommentsList().size()) + "\n");
+						changeableIndentationNumber = indentationNumber;
+						while (changeableIndentationNumber > 1){
+							string.append(tab);
+							changeableIndentationNumber -= 1;
+						}
+						string.append(commentsList.get(x).getMessage());
 					}
-					if (changeableIndentationNumber != 0){
-						string.append("|");
-					}
-					string.append(" > ID:");
-					string.append(Integer.toString(id) + "\n");
-					changeableIndentationNumber = indentationNumber;
-					while (changeableIndentationNumber > 1){
-						string.append(tab);
-						changeableIndentationNumber -= 1;
-					}
-					string.append("Account: " + Integer.toString(commentsList.get(x).getAccountID()) + "\n");
-					changeableIndentationNumber = indentationNumber;
-					while (changeableIndentationNumber > 1){
-						string.append(tab);
-						changeableIndentationNumber -= 1;
-					}
-					string.append("No. endorsements: " + Integer.toString(accountsList.get(pos).getEndorsements().size()) + " | No. comments: " + Integer.toString(accountsList.get(pos).getComments().size()) + "\n");
-					changeableIndentationNumber = indentationNumber;
-					while (changeableIndentationNumber > 1){
-						string.append(tab);
-						changeableIndentationNumber -= 1;
-					}
-					string.append(commentsList.get(x).getMessage() + "\n |");
 
 					for (int y = 0; y < commentsList.get(x).getCommentsList().size(); y++){
 						ArrayList<Integer> childElementsList = commentsList.get(x).getCommentsList();
 						for (int z = 0; z < childElementsList.size(); z++){
-							string.append(showPostChildrenDetails(childElementsList.get(z)));
+							changeableIndentationNumber = indentationNumber;
+							if (changeableIndentationNumber != 0){
+								string.append("\n");
+							}
+							changeableIndentationNumber = indentationNumber + 1;
+							while (changeableIndentationNumber > 1){
+								string.append(tab);
+								changeableIndentationNumber -= 1;
+							}
+							changeableIndentationNumber = indentationNumber;
+							if (changeableIndentationNumber != 0){
+								string.append("|");
+							}
+							string.append(recursiveApproach(childElementsList.get(z)));
 						}
 					}
 					indentationNumber -= 1;
@@ -349,7 +417,9 @@ public class BadSocialMedia implements SocialMediaPlatform {
 				}
 			}
 		}
-		return null;
+		StringBuilder string = new StringBuilder();
+		indentationNumber -= 1;
+		return string;
 	}
 
 	@Override
