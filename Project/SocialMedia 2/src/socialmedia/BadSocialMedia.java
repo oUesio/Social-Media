@@ -42,15 +42,26 @@ public class BadSocialMedia implements SocialMediaPlatform {
 	@Override
 	public void changeAccountHandle(String oldHandle, String newHandle)
 			throws HandleNotRecognisedException, IllegalHandleException, InvalidHandleException {
-		// TODO Auto-generated method stub
-
+		for (int pos = 0; pos < accountsList.size(); pos++) {
+			if (accountsList.get(pos).getHandle() == oldHandle) {
+				accountsList.get(pos).setHandle(newHandle);
+				return;
+			}
+		}
+		//else throw errors here
 	}
 
 	@Override
 	public void updateAccountDescription(String handle, String description) throws HandleNotRecognisedException {
-		// TODO Auto-generated method stub
-
+		for (int pos = 0; pos < accountsList.size(); pos++) {
+			if (accountsList.get(pos).getHandle() == handle) {
+				accountsList.get(pos).setDescription(description);
+				return;
+			}
+		}
+		//else throw error here
 	}
+
 
 	@Override
 	public String showAccount(String handle) throws HandleNotRecognisedException {
@@ -286,7 +297,16 @@ public class BadSocialMedia implements SocialMediaPlatform {
 						string.append(tab);
 						changeableIndentationNumber -= 1;
 					}
-					string.append("Account: " + Integer.toString(postsList.get(x).getAccountID()) + "\n");
+					for (int a = 0; a < accountsList.size(); a++) {
+						if (accountsList.get(a).getAccountID() == postsList.get(x).getAccountID()){
+							changeableIndentationNumber = indentationNumber;
+							while (changeableIndentationNumber > 1){
+								string.append(tab);
+								changeableIndentationNumber -= 1;
+							}
+							string.append("Account: " + accountsList.get(a).getHandle() + "\n");
+						}
+					}
 					changeableIndentationNumber = indentationNumber;
 					while (changeableIndentationNumber > 0){
 						string.append(tab);
@@ -347,7 +367,20 @@ public class BadSocialMedia implements SocialMediaPlatform {
 							string.append(tab);
 							changeableIndentationNumber -= 1;
 						}
-						string.append(tab + "Account: " + Integer.toString(commentsList.get(x).getAccountID()) + "\n");
+						for (int a = 0; a < accountsList.size(); a++) {
+							if (accountsList.get(a).getAccountID() == commentsList.get(x).getAccountID()){
+								changeableIndentationNumber = indentationNumber;
+								while (changeableIndentationNumber > 1){
+									string.append(tab);
+									changeableIndentationNumber -= 1;
+								}
+								changeableIndentationNumber = indentationNumber;
+								if (changeableIndentationNumber == 1){
+									string.append(tab);
+								}
+								string.append("Account: " + accountsList.get(a).getHandle() + "\n");
+							}
+						}
 						changeableIndentationNumber = indentationNumber;
 						while (changeableIndentationNumber > 1){
 							string.append(tab);
