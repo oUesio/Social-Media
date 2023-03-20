@@ -62,10 +62,13 @@ public class BadSocialMedia implements SocialMediaPlatform {
 		//else throw error here
 	}
 
-
 	@Override
 	public String showAccount(String handle) throws HandleNotRecognisedException {
-		// TODO Auto-generated method stub
+		for (int a = 0; a < accountsList.size(); a++) {
+			if (accountsList.get(a).getHandle() == handle){
+				return String.format("<pre>\nID: %d\nHandle: %s\nDescription: %s\nPost count: %d\nEndorse count: %s\n</pre>", accountsList.get(a).getAccountID(), accountsList.get(a).getHandle(), accountsList.get(a).getDescription(), (accountsList.get(a).getComments().size() + accountsList.get(a).getEndorsements().size() + accountsList.get(a).getOriginalPosts().size()), 0);
+			}
+		}
 		return null;
 	}
 
