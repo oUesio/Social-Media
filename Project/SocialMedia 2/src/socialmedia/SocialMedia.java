@@ -602,8 +602,13 @@ public class SocialMedia implements SocialMediaPlatform {
 
 	@Override
 	public void erasePlatform() {
-		// TODO Auto-generated method stub
-
+		//Clears all the lists storing accounts (thus clearing all its posts, comments and endorsements), also clear deleted comments and posts to completely erase the platform.
+		accountsList.clear();
+        	deletedCommentsList.clear();
+        	deletedPostsList.clear();
+        	//Also resets/clears other counters (which should already be reset, but just to ensure.)
+        	checkedElements.clear();
+        	indentationNumber = -1;
 	}
 
 	@Override
