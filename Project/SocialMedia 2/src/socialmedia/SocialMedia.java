@@ -536,14 +536,6 @@ public class SocialMedia implements SocialMediaPlatform {
 			//Increments the size of comment list of the account
 			total += accountsList.get(pos).getComments().size();
 		}
-		for (int pos = 0; pos < deletedPostsList.size(); pos++) {
-			//Increments the size of comment list of the deleted post
-			total += deletedPostsList.get(pos).getCommentsList().size();
-		}
-		for (int pos = 0; pos < deletedCommentsList.size(); pos++) {
-			//Increments the size of comment list of the deleted comment
-			total += deletedCommentsList.get(pos).getCommentsList().size();
-		}
 		return total;
 	}
 
