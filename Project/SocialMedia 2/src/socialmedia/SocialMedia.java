@@ -24,14 +24,58 @@ public class SocialMedia implements SocialMediaPlatform {
 
 	@Override
 	public void removeAccount(int id) throws AccountIDNotRecognisedException {
-		//Deletes the account with the id
-		accountsList.removeIf(acc -> (acc.getAccountID() == id));
+		for (int accPos = 0; accPos < accountsList.size(); accPos++) {
+			//Finds the account with the id
+			if (accountsList.get(accPos).getAccountID() == id) {
+				//Deletes all posts, comments and endorsements of the account
+				try {
+					ArrayList<Post> tempPosts = new ArrayList<Post>(accountsList.get(accPos).getOriginalPosts());
+					for (Post post : tempPosts) {
+						deletePost(post.getPostID());
+					}
+					ArrayList<Comment> tempComments = new ArrayList<Comment>(accountsList.get(accPos).getComments());
+					for (Comment comment : tempComments) {
+						deletePost(comment.getPostID());
+					}
+					ArrayList<Endorsement> tempEndorsements = new ArrayList<Endorsement>(accountsList.get(accPos).getEndorsements());
+					for (Endorsement endorse : tempEndorsements) {
+						deletePost(endorse.getPostID());
+					}
+				} catch (PostIDNotRecognisedException e) {
+					continue;
+				}
+				//Deletes the account with the id
+				accountsList.remove(accountsList.get(accPos));
+			}
+		}
 	}
 
 	@Override
 	public void removeAccount(String handle) throws HandleNotRecognisedException {
-		//Deletes the account with the handle
-		accountsList.removeIf(acc -> (acc.getHandle() == handle));
+		for (int accPos = 0; accPos < accountsList.size(); accPos++) {
+			//Finds the account with the handle
+			if (accountsList.get(accPos).getHandle() == handle) {
+				//Deletes all posts, comments and endorsements of the account
+				try {
+					ArrayList<Post> tempPosts = new ArrayList<Post>(accountsList.get(accPos).getOriginalPosts());
+					for (Post post : tempPosts) {
+						deletePost(post.getPostID());
+					}
+					ArrayList<Comment> tempComments = new ArrayList<Comment>(accountsList.get(accPos).getComments());
+					for (Comment comment : tempComments) {
+						deletePost(comment.getPostID());
+					}
+					ArrayList<Endorsement> tempEndorsements = new ArrayList<Endorsement>(accountsList.get(accPos).getEndorsements());
+					for (Endorsement endorse : tempEndorsements) {
+						deletePost(endorse.getPostID());
+					}
+				} catch (PostIDNotRecognisedException e) {
+					continue;
+				}
+				//Deletes the account with the handle
+				accountsList.remove(accountsList.get(accPos));
+			}
+		}
 	}
 
 	@Override
