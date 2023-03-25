@@ -656,7 +656,7 @@ public class SocialMedia implements SocialMediaPlatform {
         	all.put("DeletedComments", deletedCommentsList);
 		try {
 			//Stores the dictionary into a file
-			FileOutputStream file = new FileOutputStream(filename);
+			FileOutputStream file = new FileOutputStream(filename + ".ser");
 			ObjectOutputStream out = new ObjectOutputStream(file);
 			out.writeObject(all);
 			out.close();
@@ -671,7 +671,7 @@ public class SocialMedia implements SocialMediaPlatform {
 		Dictionary<String, ArrayList<Object>> all = null;
 		try {  
 				//Retrieves a dictionary from a file
-		        FileInputStream file = new FileInputStream(filename);
+		        FileInputStream file = new FileInputStream(filename + ".ser");
 		        ObjectInputStream in = new ObjectInputStream(file);
 		        all = (Dictionary<String, ArrayList<Object>>)in.readObject();
 		        in.close();
