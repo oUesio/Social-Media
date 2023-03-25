@@ -649,13 +649,49 @@ public class SocialMedia implements SocialMediaPlatform {
 
 	@Override
 	public void savePlatform(String filename) throws IOException {
-		// TODO Auto-generated method stub
-
+		//Creates a dictionary to store the arraylists
+		Dictionary<String, Object> all = new Hashtable<>();
+		all.put("Accounts", accountsList);
+        	all.put("DeletedPosts", deletedPostsList);
+        	all.put("DeletedComments", deletedCommentsList);
+		try {
+			//Stores the dictionary into a file
+			FileOutputStream file = new FileOutputStream(filename);
+			ObjectOutputStream out = new ObjectOutputStream(file);
+			out.writeObject(all);
+			out.close();
+			file.close();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void loadPlatform(String filename) throws IOException, ClassNotFoundException {
-		// TODO Auto-generated method stub
+		Dictionary<String, ArrayList<Object>> all = null;
+		try {  
+				//Retrieves a dictionary from a file
+		        FileInputStream file = new FileInputStream(filename);
+		        ObjectInputStream in = new ObjectInputStream(file);
+		        all = (Dictionary<String, ArrayList<Object>>)in.readObject();
+		        in.close();
+		        file.close();
+		        //Replaces the arraylists with the ones in the file
+		        erasePlatform();
+		        for (Object obj : all.get("Accounts")) {
+				accountsList.add((Account) obj);
+			}
+			for (Object obj : all.get("DeletedPosts")) {
+				deletedPostsList.add((DeletedPost) obj);
+			}
+			for (Object obj : all.get("DeletedComments")) {
+				deletedCommentsList.add((DeletedComment) obj);
+			}
+		} catch(IOException e) {
+			e.printStackTrace();
+		} catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 
 	}
 
