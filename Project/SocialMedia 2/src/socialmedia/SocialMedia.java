@@ -359,13 +359,27 @@ public class SocialMedia implements SocialMediaPlatform {
 			ArrayList<Endorsement> endorsementsList = accountsList.get(pos).getEndorsements();
 			for (int x = 0; x < endorsementsList.size(); x++){
 				if (endorsementsList.get(x).getPostID() == id){
-					return String.format("<pre>\nID: %d\nAccount: %s\nNo. endorsements: %s N/A | No. comments: %s N/A\n%s\n</pre>", id, accountsList.get(pos).getHandle(), 0, 0, "N/A");
+					return String.format("<pre>\nID: %d\nAccount: %s\nNo. endorsements: N/A | No. comments: N/A\n%s\n</pre>", id, accountsList.get(pos).getHandle(), "Endorses post with post ID " + endorsementsList.get(x).getPostReferenceID());// + " of message: " + endorsementsList.get(x).getMessage()); //this does not work?
 				}
 			}
 		}
-		return null;
+		//Formatted string for deleted comments
+		for (int x = 0; x < deletedCommentsList.size(); x++){
+			if (deletedCommentsList.get(x).getPostID() == id){
+				return String.format("<pre>\nID: %d\nAccount: N/A\nNo. endorsements: N/A | No. comments: %s\n%s\n</pre>", id, deletedCommentsList.get(x).getCommentsList().size(), deletedCommentsList.get(x).getMessage());
+			}
+		}
+		//Formatted string for deleted posts
+		for (int x = 0; x < deletedPostsList.size(); x++){
+			if (deletedPostsList.get(x).getPostID() == id){
+				return String.format("<pre>\nID: %d\nAccount: N/A\nNo. endorsements: N/A | No. comments: %s\n%s\n</pre>", id, deletedPostsList.get(x).getCommentsList().size(), deletedPostsList.get(x).getMessage());
+			}
+		}
+		//Now it has looped through all the lists of each account and deleted lists, if not found, we now the post does not exist, sop throw post ID not recognised exception
+		throw new PostIDNotRecognisedException();
 	}
-
+	
+	
 	private int indentationNumber = -1;
 	//Stores IDs which have been checked
 	private ArrayList<Integer> checkedElements = new ArrayList<Integer>();
