@@ -139,7 +139,8 @@ public class SocialMedia implements SocialMediaPlatform {
 				return String.format("<pre>\nID: %d\nHandle: %s\nDescription: %s\nPost count: %d\nEndorse count: %s\n</pre>", acc.getAccountID(), acc.getHandle(), acc.getDescription(), (acc.getComments().size() + acc.getEndorsements().size() + acc.getOriginalPosts().size()), totalEndorsements);
 			}
 		}
-		return null;
+		//If it has looped through here and not returned, then the handle must not be in the system, so throws handle not recognised.
+		throw new HandleNotRecognisedException();
 	}
 
 	@Override
