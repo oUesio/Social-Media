@@ -386,6 +386,51 @@ public class SocialMedia implements SocialMediaPlatform {
 	@Override
 	public StringBuilder showPostChildrenDetails(int id)
 			throws PostIDNotRecognisedException, NotActionablePostException {
+		//The following 3 for loops check each list to see if the post is non actionable, creates and sets a flag to false if actionable, false if not actionable. They also set a flag postIDRecognised to true if the post ID is found in a list.
+		Boolean notActionable = false;
+		Boolean postIDRecognised = false;
+		for (int pos = 0; pos < accountsList.size(); pos++) {
+			ArrayList<Post> postsList = accountsList.get(pos).getOriginalPosts();
+			for (int x = 0; x < postsList.size(); x++){
+				if (postsList.get(x).getPostID() == id){
+					notActionable = false;
+					postIDRecognised = true;
+				}
+			}
+			ArrayList<Comment> commentsList = accountsList.get(pos).getComments();
+			for (int x = 0; x < commentsList.size(); x++){
+				if (commentsList.get(x).getPostID() == id){
+					notActionable = false;
+					postIDRecognised = true;
+				}
+			}
+			ArrayList<Endorsement> endorsementsList = accountsList.get(pos).getEndorsements();
+			for (int x = 0; x < endorsementsList.size(); x++){
+				if (endorsementsList.get(x).getPostID() == id){
+					notActionable = true;
+					postIDRecognised = true;
+				}
+			}
+		}
+		for (int x = 0; x < deletedPostsList.size(); x++){
+			if (deletedPostsList.get(x).getPostID() == id){
+				notActionable = false;
+				postIDRecognised = true;
+			}
+		}
+		for (int x = 0; x < deletedCommentsList.size(); x++){
+			if (deletedCommentsList.get(x).getPostID() == id){
+				notActionable = false;
+				postIDRecognised = true;
+			}
+		}
+		//I can then do 2 simple if statements to throw the correct errors should the booleans be fulfilled
+		if (!postIDRecognised){
+			throw new PostIDNotRecognisedException();
+		}
+		if (notActionable){
+			throw new NotActionablePostException();
+		}
 		StringBuilder string = new StringBuilder();
 		string.append("<pre>\n");
 		string.append(recursiveApproach(id));
@@ -609,7 +654,7 @@ public class SocialMedia implements SocialMediaPlatform {
 					if (changeableIndentationNumber == 1){
 						string.append(tab);
 					}
-					string.append("Account: N/A\n");
+					string.append("Account: N/A (Deleted Comment)\n");
 					changeableIndentationNumber = indentationNumber;
 					while (changeableIndentationNumber > 1){
 						string.append(tab);
@@ -640,7 +685,7 @@ public class SocialMedia implements SocialMediaPlatform {
 						string.append(tab);
 						changeableIndentationNumber -= 1;
 					}
-					string.append("Account: N/A\n");
+					string.append("Account: N/A (Deleted comment)\n");
 					changeableIndentationNumber = indentationNumber;
 					while (changeableIndentationNumber > 1){
 						string.append(tab);
@@ -711,7 +756,7 @@ public class SocialMedia implements SocialMediaPlatform {
 					if (changeableIndentationNumber == 1){
 						string.append(tab);
 					}
-					string.append("Account: N/A\n");
+					string.append("Account: N/A (Deleted post)\n");
 					changeableIndentationNumber = indentationNumber;
 					while (changeableIndentationNumber > 1){
 						string.append(tab);
@@ -742,7 +787,7 @@ public class SocialMedia implements SocialMediaPlatform {
 						string.append(tab);
 						changeableIndentationNumber -= 1;
 					}
-					string.append("Account: N/A\n");
+					string.append("Account: N/A (Deleted post)\n");
 					changeableIndentationNumber = indentationNumber;
 					while (changeableIndentationNumber > 1){
 						string.append(tab);
