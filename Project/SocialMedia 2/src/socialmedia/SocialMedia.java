@@ -2,6 +2,12 @@ package socialmedia;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 public class SocialMedia implements SocialMediaPlatform {
 	private ArrayList<Account> accountsList = new ArrayList<Account>();
