@@ -117,6 +117,8 @@ public class SocialMedia implements SocialMediaPlatform {
 				return;
 			}
 		}
+		//If it has looped through here and not returned, then the handle must not be in the system, so throws handle not recognised.
+		throw new HandleNotRecognisedException();
 	}
 
 	@Override
