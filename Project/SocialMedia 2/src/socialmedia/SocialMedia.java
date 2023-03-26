@@ -543,6 +543,210 @@ public class SocialMedia implements SocialMediaPlatform {
 				}
 			}
 		}
+		ArrayList<DeletedComment> deleteCommentsListObj = deletedCommentsList;
+		for (int x = 0; x < deleteCommentsListObj.size(); x++){ //for every comment in comments list
+			if (deleteCommentsListObj.get(x).getPostID() == id && !checkedElements.contains(id)){ //if the comment has the ID we are looking for
+				checkedElements.add(id);
+				StringBuilder string = new StringBuilder();
+				String tab = "\t";
+				int changeableIndentationNumber = indentationNumber;
+				if (indentationNumber != 0){
+					changeableIndentationNumber = indentationNumber;
+					if (changeableIndentationNumber != 0){
+						string.append("\n");
+					}
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("|" + tab + "> ID:");
+					string.append(Integer.toString(id) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					changeableIndentationNumber = indentationNumber;
+					if (changeableIndentationNumber == 1){
+						string.append(tab);
+					}
+					string.append("Account: N/A (Deleted Comment)\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append(tab + "No. endorsements: N/A | No. comments: " + Integer.toString(deleteCommentsListObj.get(x).getCommentsList().size()) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append(tab + deleteCommentsListObj.get(x).getMessage());
+				}
+				if (indentationNumber == 0){
+					changeableIndentationNumber = indentationNumber;
+					if (changeableIndentationNumber != 0){
+						string.append("\n");
+					}
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("ID:");
+					string.append(Integer.toString(id) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("Account: N/A (Deleted comment)\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("No. endorsements: N/A | No. comments: " + Integer.toString(deleteCommentsListObj.get(x).getCommentsList().size()) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append(deleteCommentsListObj.get(x).getMessage());
+				}
+
+				for (int y = 0; y < deleteCommentsListObj.get(x).getCommentsList().size(); y++){
+					ArrayList<Integer> childElementsList = deleteCommentsListObj.get(x).getCommentsList();
+					for (int z = 0; z < childElementsList.size(); z++){
+						changeableIndentationNumber = indentationNumber;
+						if (changeableIndentationNumber != 0){
+							string.append("\n");
+						}
+						changeableIndentationNumber = indentationNumber + 1;
+						while (changeableIndentationNumber > 1){
+							string.append(tab);
+							changeableIndentationNumber -= 1;
+						}
+						changeableIndentationNumber = indentationNumber;
+						if (changeableIndentationNumber != 0){
+							string.append("|");
+						}
+						string.append(recursiveApproach(childElementsList.get(z)));
+					}
+				}
+				indentationNumber -= 1;
+				return string;
+			}
+		}
+		ArrayList<DeletedPost> deletePostsListObj = deletedPostsList;
+		for (int x = 0; x < deletePostsListObj.size(); x++){ //for every comment in comments list
+			if (deletePostsListObj.get(x).getPostID() == id && !checkedElements.contains(id)){ //if the comment has the ID we are looking for
+				checkedElements.add(id);
+				StringBuilder string = new StringBuilder();
+				String tab = "\t";
+				int changeableIndentationNumber = indentationNumber;
+				if (indentationNumber != 0){
+					changeableIndentationNumber = indentationNumber;
+					if (changeableIndentationNumber != 0){
+						string.append("\n");
+					}
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("|" + tab + "> ID:");
+					string.append(Integer.toString(id) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					changeableIndentationNumber = indentationNumber;
+					if (changeableIndentationNumber == 1){
+						string.append(tab);
+					}
+					string.append("Account: N/A (Deleted post)\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append(tab + "No. endorsements: N/A | No. comments: " + Integer.toString(deletePostsListObj.get(x).getCommentsList().size()) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append(tab + deletePostsListObj.get(x).getMessage());
+				}
+				if (indentationNumber == 0){
+					changeableIndentationNumber = indentationNumber;
+					if (changeableIndentationNumber != 0){
+						string.append("\n");
+					}
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("ID:");
+					string.append(Integer.toString(id) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("Account: N/A (Deleted post)\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append("No. endorsements: N/A | No. comments: " + Integer.toString(deletePostsListObj.get(x).getCommentsList().size()) + "\n");
+					changeableIndentationNumber = indentationNumber;
+					while (changeableIndentationNumber > 1){
+						string.append(tab);
+						changeableIndentationNumber -= 1;
+					}
+					string.append(deletePostsListObj.get(x).getMessage());
+				}
+
+				for (int y = 0; y < deletePostsListObj.get(x).getCommentsList().size(); y++){
+					ArrayList<Integer> childElementsList = deletePostsListObj.get(x).getCommentsList();
+					for (int z = 0; z < childElementsList.size(); z++){
+						changeableIndentationNumber = indentationNumber;
+						if (changeableIndentationNumber != 0){
+							string.append("\n");
+						}
+						changeableIndentationNumber = indentationNumber + 1;
+						while (changeableIndentationNumber > 1){
+							string.append(tab);
+							changeableIndentationNumber -= 1;
+						}
+						changeableIndentationNumber = indentationNumber;
+						if (changeableIndentationNumber != 0){
+							string.append("|");
+						}
+						string.append(recursiveApproach(childElementsList.get(z)));
+					}
+				}
+				indentationNumber -= 1;
+				return string;
+			}
+		}
 		StringBuilder string = new StringBuilder();
 		indentationNumber -= 1;
 		return string;
