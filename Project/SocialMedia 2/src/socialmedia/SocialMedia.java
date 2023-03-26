@@ -81,6 +81,20 @@ public class SocialMedia implements SocialMediaPlatform {
 	@Override
 	public void changeAccountHandle(String oldHandle, String newHandle)
 			throws HandleNotRecognisedException, IllegalHandleException, InvalidHandleException {
+		//First checks if the newHandle exists in the system, if so, throw IllegalHandleException
+		Boolean flag1 = false;
+		for (Account acc : accountsList){
+			if (acc.getHandle() == newHandle){
+				flag1 = true;
+			}
+		}
+		if (flag1 == true){
+			throw new IllegalHandleException();
+		}
+		//Check if the new handle is legal within the system spec
+		if (newHandle == "" || newHandle == null || newHandle.length() > 32 || newHandle.contains(" ")){
+			throw new InvalidHandleException();
+		}
 		for (int pos = 0; pos < accountsList.size(); pos++) {
 			//Finds the account with the oldHandle
 			if (accountsList.get(pos).getHandle() == oldHandle) {
@@ -89,6 +103,8 @@ public class SocialMedia implements SocialMediaPlatform {
 				return;
 			}
 		}
+		//If it has looped through here and not returned, then the oldHandle must not be in the system, so throws handle not recognised.
+		throw new HandleNotRecognisedException();
 	}
 
 	@Override
