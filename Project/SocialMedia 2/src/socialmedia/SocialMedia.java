@@ -163,16 +163,18 @@ public class SocialMedia implements SocialMediaPlatform {
 				for (int pos = 0; pos < accountsList.size(); pos++) {
 					//Finds account with the handle
 					if (accountsList.get(pos).getHandle() == handle) {
-						int endorseID = accountsList.get(pos).createEndorsement(accountsList.get(pos).getDescription(), id);
+						int endorseID = -1;
 						for (Account acc : accountsList) {
 							//Adds endorsement ID to post when the ID of the post being endorsed is found in an account
 							int foundPostIDPos = acc.searchPost(id);
 							if (foundPostIDPos != -1) {
+								endorseID = accountsList.get(pos).createEndorsement("EP@" + acc.getHandle() + ": " + acc.getOriginalPosts().get(foundPostIDPos).getMessage(), id);
 								acc.addEndorseIDtoPostAt(foundPostIDPos, endorseID);
 								break;
 							}
 							int foundCommentIDPos = acc.searchComment(id);
 							if (foundCommentIDPos != -1) {
+								endorseID = accountsList.get(pos).createEndorsement("EP@" + acc.getHandle() + ": " + acc.getComments().get(foundCommentIDPos).getMessage(), id);
 								acc.addEndorseIDtoCommentAt(foundCommentIDPos, endorseID);
 								break;
 							}
