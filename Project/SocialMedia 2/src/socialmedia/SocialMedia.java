@@ -595,7 +595,7 @@ public class SocialMedia implements SocialMediaPlatform {
 					if (changeableIndentationNumber == 1){
 						string.append(tab);
 					}
-					string.append("Account: N/A (Deleted Comment)\n");
+					string.append("Account: N/A\n");
 					changeableIndentationNumber = indentationNumber;
 					while (changeableIndentationNumber > 1){
 						string.append(tab);
@@ -626,7 +626,7 @@ public class SocialMedia implements SocialMediaPlatform {
 						string.append(tab);
 						changeableIndentationNumber -= 1;
 					}
-					string.append("Account: N/A (Deleted comment)\n");
+					string.append("Account: N/A\n");
 					changeableIndentationNumber = indentationNumber;
 					while (changeableIndentationNumber > 1){
 						string.append(tab);
@@ -697,7 +697,7 @@ public class SocialMedia implements SocialMediaPlatform {
 					if (changeableIndentationNumber == 1){
 						string.append(tab);
 					}
-					string.append("Account: N/A (Deleted post)\n");
+					string.append("Account: N/A\n");
 					changeableIndentationNumber = indentationNumber;
 					while (changeableIndentationNumber > 1){
 						string.append(tab);
@@ -728,7 +728,7 @@ public class SocialMedia implements SocialMediaPlatform {
 						string.append(tab);
 						changeableIndentationNumber -= 1;
 					}
-					string.append("Account: N/A (Deleted post)\n");
+					string.append("Account: N/A\n");
 					changeableIndentationNumber = indentationNumber;
 					while (changeableIndentationNumber > 1){
 						string.append(tab);
