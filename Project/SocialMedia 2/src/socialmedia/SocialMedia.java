@@ -221,71 +221,87 @@ public class SocialMedia implements SocialMediaPlatform {
 
 	@Override
 	public void deletePost(int id) throws PostIDNotRecognisedException {
-		for (int accPos = 0; accPos < accountsList.size(); accPos++) {
+		int postPos = -1;
+		int endorsePos = -1;
+		int commentPos = -1;
+		int accPos = 0;
+		while (accPos < accountsList.size()) {
 			//Looks for post, endorsement or comment with the ID
-			int postPos = accountsList.get(accPos).searchPost(id);
-			int endorsePos = accountsList.get(accPos).searchEndorsement(id);
-			int commentPos = accountsList.get(accPos).searchComment(id);
-			//ID found in original posts
-			if (postPos != -1) {
-				Post oldPost = accountsList.get(accPos).getOriginalPosts().get(postPos);
-				//Placeholder creation, doesn't create if there are no comments
-				if (oldPost.getCommentsList().size() != 0) {
-					deletedPostsList.add(new DeletedPost(oldPost.getPostID(), oldPost.getCommentsList()));
-				}
-				ArrayList<Integer> oldEndorsements = oldPost.getEndorsementsList();
-				//Looks through accounts again to find endorsements made on the post
-				for (Account acc : accountsList) { 
-					ArrayList<Endorsement> endorsements = new ArrayList<Endorsement>(acc.getEndorsements());
-					for (Endorsement endorse : endorsements) {
-						//Checks if the ID is in the list of endorsement IDs to be deleted
-						if (oldEndorsements.contains(endorse.getPostID())) {
-							//Deletes endorsement object
-							acc.getEndorsements().remove(endorse);
-							//Removes from endorsements to be deleted list since it has been found
-							oldEndorsements.remove((Integer) endorse.getPostID()); 
-						}
-					}
-					//Stops early when all endorsements have been found and deleted
-					if (oldEndorsements.size() == 0) {
-						break;
-					}
-				}
-				//Removes the post object
-				accountsList.get(accPos).removePostAt(postPos);
+			postPos = accountsList.get(accPos).searchPost(id);
+			endorsePos = accountsList.get(accPos).searchEndorsement(id);
+			commentPos = accountsList.get(accPos).searchComment(id);
+			//Stops searching when object has been found
+			if (postPos != -1 || endorsePos != -1 || commentPos != -1) {
 				break;
-			} else if (endorsePos != -1) { //ID found in endorsements
-				Endorsement oldEndorsement = accountsList.get(accPos).getEndorsements().get(endorsePos);
-				for (Account acc : accountsList) {
-					//Looks for post or comment with the post reference ID
-					int postPos2 = acc.searchPost(oldEndorsement.getPostReferenceID());
-					int commentPos2 = acc.searchComment(oldEndorsement.getPostReferenceID());
-					//Deletes endorsement ID from post
-					if (postPos2 != -1) {
-						acc.removeEndorseIDinPostAt(postPos2, oldEndorsement.getPostID());
-						break;
-					} else if (commentPos2 != -1) {
-						acc.removeEndorseIDinCommentAt(commentPos2, oldEndorsement.getPostID());
-						break;
+			}
+			accPos++;
+		}
+		//Throws exception if the object doesn't exist
+		if (postPos != -1 && endorsePos != -1 && commentPos != -1) {
+			throw new PostIDNotRecognisedException();
+		}
+		//ID found in original posts
+		if (postPos != -1) {
+			Post oldPost = accountsList.get(accPos).getOriginalPosts().get(postPos);
+			//Placeholder creation, doesn't create if there are no comments
+			if (oldPost.getCommentsList().size() != 0) {
+				deletedPostsList.add(new DeletedPost(oldPost.getPostID(), oldPost.getCommentsList()));
+			}
+			ArrayList<Integer> oldEndorsements = oldPost.getEndorsementsList();
+			//Looks through accounts again to find endorsements made on the post
+			for (Account acc : accountsList) { 
+				ArrayList<Endorsement> endorsements = new ArrayList<Endorsement>(acc.getEndorsements());
+				for (Endorsement endorse : endorsements) {
+					//Checks if the ID is in the list of endorsement IDs to be deleted
+					if (oldEndorsements.contains(endorse.getPostID())) {
+						//Deletes endorsement object
+						acc.getEndorsements().remove(endorse);
+						//Removes from endorsements to be deleted list since it has been found
+						oldEndorsements.remove((Integer) endorse.getPostID()); 
 					}
 				}
-				//Removes the endorsement object
-				accountsList.get(accPos).removeEndorsementAt(endorsePos);
-				break;
-			} else if (commentPos != -1) { //ID found in comments
-				Comment oldComment = accountsList.get(accPos).getComments().get(commentPos);
-				//Placeholder creation, doesn't create if there are no comments
-				if (oldComment.getCommentsList().size() != 0) {
-					deletedCommentsList.add(new DeletedComment(oldComment.getPostID(), oldComment.getCommentsList(), oldComment.getPostReferenceID())); //placeholder post
+				//Stops early when all endorsements have been found and deleted
+				if (oldEndorsements.size() == 0) {
+					break;
 				}
-				ArrayList<Integer> oldEndorsements = oldComment.getEndorsementsList();
-				boolean commentFound = false;
-				//Checks the placeholder posts for comment ID
+			}
+			//Removes the post object
+			accountsList.get(accPos).removePostAt(postPos);
+		} else if (endorsePos != -1) { //ID found in endorsements
+			Endorsement oldEndorsement = accountsList.get(accPos).getEndorsements().get(endorsePos);
+			for (Account acc : accountsList) {
+				//Looks for post or comment with the post reference ID
+				int postPos2 = acc.searchPost(oldEndorsement.getPostReferenceID());
+				int commentPos2 = acc.searchComment(oldEndorsement.getPostReferenceID());
+				//Deletes endorsement ID from post
+				if (postPos2 != -1) {
+					acc.removeEndorseIDinPostAt(postPos2, oldEndorsement.getPostID());
+					break;
+				} else if (commentPos2 != -1) {
+					acc.removeEndorseIDinCommentAt(commentPos2, oldEndorsement.getPostID());
+					break;
+				}
+			}
+			//Removes the endorsement object
+			accountsList.get(accPos).removeEndorsementAt(endorsePos);
+		} else if (commentPos != -1) { //ID found in comments
+			Comment oldComment = accountsList.get(accPos).getComments().get(commentPos);
+			//If true, deletes the id from reference post
+			boolean emptyComments = true;
+			boolean commentFound = false;
+			//Placeholder creation, doesn't create if there are no comments
+			if (oldComment.getCommentsList().size() != 0) {
+				emptyComments = false;
+				deletedCommentsList.add(new DeletedComment(oldComment.getPostID(), oldComment.getCommentsList(), oldComment.getPostReferenceID())); //placeholder post
+			}
+			ArrayList<Integer> oldEndorsements = oldComment.getEndorsementsList();
+			//Checks the placeholder posts for comment ID
+			if (emptyComments) {
 				for (int deletedPostPos = 0; deletedPostPos < deletedPostsList.size(); deletedPostPos++) {
 					DeletedPost deletedPost = deletedPostsList.get(deletedPostPos);
 					if (deletedPost.searchComment(id) != -1) {
 						//Removes ID from the reference post
-						deletedPost.removeCommentIDAt(deletedPostPos);
+						deletedPost.removeCommentIDAt(deletedPost.searchComment(id));
 						//Deletes the placeholder if it doesn't contain any comments
 						if (deletedPost.getCommentsList().size() == 0) {
 							deletedPostsList.remove(deletedPostPos);
@@ -296,53 +312,116 @@ public class SocialMedia implements SocialMediaPlatform {
 				}
 				if (!commentFound) {
 					for (int deletedCommentPos = 0; deletedCommentPos < deletedCommentsList.size(); deletedCommentPos++) {
+						//Placeholder storing the id for the comment to be deleted
 						DeletedComment deletedComment = deletedCommentsList.get(deletedCommentPos);
 						if (deletedComment.searchComment(id) != -1) {
-							deletedComment.removeCommentIDAt(deletedCommentPos);
-							if (deletedComment.getCommentsList().size() == 0) {
-								deletedCommentsList.remove(deletedCommentPos);
+							deletedComment.removeCommentIDAt(deletedComment.searchComment(id));
+							//Deletes newly empty DeletedComment objects and their ID
+							int change = 0;
+							while (deletedCommentsList.size() != 0) {
+								ArrayList<DeletedComment> tempDeletedComments = new ArrayList<DeletedComment>(deletedCommentsList);
+								for (DeletedComment del : tempDeletedComments) {
+									if (del.getCommentsList().size() == 0) {
+										boolean deletedCommentFound = false;
+										//Looks in accounts
+										for (Account acc : accountsList) {
+											boolean found = false;
+											for (Post post : acc.getOriginalPosts()) {
+												if (post.getCommentsList().contains(del.getPostID())) {
+													post.getCommentsList().remove((Integer) del.getPostID());
+													found = true;
+													deletedCommentFound = true;
+													break;
+												}
+											}
+											for (Comment comment : acc.getComments()) {
+												if (comment.getCommentsList().contains(del.getPostID())) {
+													comment.getCommentsList().remove((Integer) del.getPostID());
+													found = true;
+													deletedCommentFound = true;
+													break;
+												}
+											}
+											if (found) {
+												break;
+											}
+										}
+										//Looks in deletedposts
+										if (!deletedCommentFound) {
+											for (int deletedPostPos = 0; deletedPostPos < deletedPostsList.size(); deletedPostPos++) {
+												DeletedPost deletedPost = deletedPostsList.get(deletedPostPos);
+												if (deletedPost.searchComment(del.getPostID()) != -1) {
+													//Removes ID from the reference post
+													deletedPost.removeCommentIDAt(deletedPost.searchComment(del.getPostID()));
+													//Deletes the placeholder if it doesn't contain any comments
+													if (deletedPost.getCommentsList().size() == 0) {
+														deletedPostsList.remove(deletedPostPos);
+													}
+													deletedCommentFound = true;
+													break;
+												}
+											}
+										}
+										//Looks in deletedcomments
+										if (!deletedCommentFound) {
+											for (int deletedCommentPos2 = 0; deletedCommentPos2 < deletedCommentsList.size(); deletedCommentPos2++) {
+												DeletedComment deletedComment2 = deletedCommentsList.get(deletedCommentPos2);
+												if (deletedComment2.searchComment(del.getPostID()) != -1) {
+													//Removes ID from the reference post
+													deletedComment2.removeCommentIDAt(deletedComment2.searchComment(del.getPostID()));
+													change++;
+													break;
+												}
+											}
+										}
+										deletedCommentsList.remove(del);
+									}
+								}
+								if (change == 0) {
+									break;
+								}
+								change = 0;
 							}
 							commentFound = true;
 							break;
 						}
 					}
 				}
-				for (Account acc : accountsList) {
-					if (oldEndorsements.size() != 0) {
-						ArrayList<Endorsement> endorsements = new ArrayList<Endorsement>(acc.getEndorsements());
-						//Looks through accounts again to find endorsements made on the post
-						for (Endorsement endorse : endorsements) {
-							//Checks if the ID is in the list of endorsement IDs to be deleted
-							if (oldEndorsements.contains(endorse.getPostID())) {
-								//Deletes endorsement object
-								acc.getEndorsements().remove(endorse);
-								//Removes from endorsements to be deleted list since it has been found
-								oldEndorsements.remove((Integer) endorse.getPostID());
-							}
+			}	
+			for (Account acc : accountsList) {
+				if (oldEndorsements.size() != 0) {
+					ArrayList<Endorsement> endorsements = new ArrayList<Endorsement>(acc.getEndorsements());
+					//Looks through accounts again to find endorsements made on the post
+					for (Endorsement endorse : endorsements) {
+						//Checks if the ID is in the list of endorsement IDs to be deleted
+						if (oldEndorsements.contains(endorse.getPostID())) {
+							//Deletes endorsement object
+							acc.getEndorsements().remove(endorse);
+							//Removes from endorsements to be deleted list since it has been found
+							oldEndorsements.remove((Integer) endorse.getPostID());
 						}
-					}
-					if (!commentFound) {
-						//Looks for post or comment with the post reference ID
-						int postPos2 = acc.searchPost(oldComment.getPostReferenceID());
-						int commentPos2 = acc.searchComment(oldComment.getPostReferenceID());
-						//Deletes comment ID from post
-						if (postPos2 != -1) {
-							acc.removeCommentIDinPostAt(postPos2, oldComment.getPostID());
-							commentFound = true;
-						} else if (commentPos2 != -1) {
-							acc.removeCommentIDinCommentAt(commentPos2, oldComment.getPostID());
-							commentFound = true;
-						}
-					}
-					//Stops early when all endorsements are deleted and the ID has been removef from reference post
-					if (oldEndorsements.size() == 0 && commentFound) {
-						break;
 					}
 				}
-				//Removes the comment object
-				accountsList.get(accPos).removeCommentAt(commentPos);
-				break;
+				if (!commentFound && emptyComments) {
+					//Looks for post or comment with the post reference ID
+					int postPos2 = acc.searchPost(oldComment.getPostReferenceID());
+					int commentPos2 = acc.searchComment(oldComment.getPostReferenceID());
+					//Deletes comment ID from post
+					if (postPos2 != -1) {
+						acc.removeCommentIDinPostAt(postPos2, oldComment.getPostID());
+						commentFound = true;
+					} else if (commentPos2 != -1) {
+						acc.removeCommentIDinCommentAt(commentPos2, oldComment.getPostID());
+						commentFound = true;
+					}
+				}
+				//Stops early when all endorsements are deleted and the ID has been removef from reference post
+				if (oldEndorsements.size() == 0 && commentFound) {
+					break;
+				}
 			}
+			//Removes the comment object
+			accountsList.get(accPos).removeCommentAt(commentPos);
 		}
 	}
 
@@ -386,7 +465,6 @@ public class SocialMedia implements SocialMediaPlatform {
 		//Now it has looped through all the lists of each account and deleted lists, if not found, we now the post does not exist, sop throw post ID not recognised exception
 		throw new PostIDNotRecognisedException();
 	}
-	
 	
 	private int indentationNumber = -1;
 	//Stores IDs which have been checked
