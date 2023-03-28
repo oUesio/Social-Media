@@ -62,4 +62,8 @@ public class Post{
             }
         }
     }
+    
+    public void resetNumberOfPosts() {
+        numberOfPosts = 0;
+    }
 }
