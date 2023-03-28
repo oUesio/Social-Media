@@ -166,7 +166,7 @@ public class SocialMedia implements SocialMediaPlatform {
 		throw new HandleNotRecognisedException();
 	}
 
-	@Override
+		@Override
 	public int createPost(String handle, String message) throws HandleNotRecognisedException, InvalidPostException {
 		//Checks the message is inside the character limit
 		if (message.length() <= 100 && message != "") {
@@ -185,11 +185,14 @@ public class SocialMedia implements SocialMediaPlatform {
 	@Override
 	public int endorsePost(String handle, int id)
 			throws HandleNotRecognisedException, PostIDNotRecognisedException, NotActionablePostException {
+				boolean handleExists = false;
+				boolean notActionable = false;
 				for (int pos = 0; pos < accountsList.size(); pos++) {
 					//Finds account with the handle
 					if (accountsList.get(pos).getHandle() == handle) {
+						handleExists = true;
+						System.out.println("KLEIQBWGILNFWIQBFJLWQ");
 						int endorseID = -1;
-						boolean notActionable = false;
 						for (Account acc : accountsList) {
 							//Adds endorsement ID to post when the ID of the post being endorsed is found in an account
 							int foundPostIDPos = acc.searchPost(id);
@@ -210,42 +213,68 @@ public class SocialMedia implements SocialMediaPlatform {
 								break;
 							}
 						}
-						if (endorseID == -1) {
-							throw new PostIDNotRecognisedException();
-						} else if (notActionable) {
-							throw new NotActionablePostException();
+						if (endorseID != -1) {
+							return endorseID;
 						}
-						return endorseID;
 					}
 				}
-				throw new HandleNotRecognisedException();
+				if (!handleExists) {
+					throw new HandleNotRecognisedException();
+				} else if (notActionable) {
+					throw new NotActionablePostException();
+				}
+				throw new PostIDNotRecognisedException();
 			}
+
 	@Override
 	public int commentPost(String handle, int id, String message) throws HandleNotRecognisedException,
 			PostIDNotRecognisedException, NotActionablePostException, InvalidPostException {
 				//Checks the message is inside the character limit
-				if (message.length() <= 100) {
+				if (message.length() <= 100 && message != "") {
+					boolean handleExists = false;
+					boolean postIDExists = false;
+					boolean notActionable = false;
 					for (int pos = 0; pos < accountsList.size(); pos++) {
 						if (accountsList.get(pos).getHandle() == handle) {
-							int commentID =  accountsList.get(pos).createComment(message, id);
+							handleExists = true;
+							int commentID =  -1;
 							for (Account acc : accountsList) {
 								//Adds comment ID to post when the ID of the post being commented is found in an account
 								int foundPostIDPos = acc.searchPost(id);
 								if (foundPostIDPos != -1) {
+									postIDExists = true;
+									commentID = accountsList.get(pos).createComment(message, id);
 									acc.addCommentIDtoPostAt(foundPostIDPos, commentID);
 									break;
 								}
 								int foundCommentIDPos = acc.searchComment(id);
 								if (foundCommentIDPos != -1) {
+									postIDExists = true;
+									commentID = accountsList.get(pos).createComment(message, id);
 									acc.addCommentIDtoCommentAt(foundCommentIDPos, commentID);
 									break;
 								}
+								int foundEndorseIDPos = acc.searchEndorsement(id);
+								if (foundEndorseIDPos != -1) { 
+									postIDExists = true;
+									notActionable = true;
+									break;
+								}
 							}
-							return commentID;
+							if (commentID != -1) {
+								return commentID;
+							}
 						}
 					}
+					if (!handleExists) {
+						throw new HandleNotRecognisedException();
+					} else if (notActionable) {
+						throw new NotActionablePostException();
+					} else if (!postIDExists) {
+						throw new PostIDNotRecognisedException();
+					}
 				}
-				return -1;
+				throw new InvalidPostException();
 			}
 
 	@Override
