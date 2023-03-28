@@ -2,7 +2,7 @@ package socialmedia;
 
 import java.util.ArrayList;
 
-public class DeletedPost {
+public class DeletedPost implements Serializable {
     private int postID; //postID of old post
     private ArrayList<Integer> commentsList; //comments of the old post
     protected String message = "The original content was removed from the system and is no longer available.";
