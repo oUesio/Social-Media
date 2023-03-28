@@ -2,7 +2,7 @@ package socialmedia;
 
 import java.util.ArrayList;
 
-public class Post{
+public class Post implements Serializable {
     private int postID;
     protected static int numberOfPosts = 0;
     private int accountID;
