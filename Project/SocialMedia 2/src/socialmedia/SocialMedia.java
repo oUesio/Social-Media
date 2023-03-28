@@ -17,17 +17,13 @@ public class SocialMedia implements SocialMediaPlatform {
 	@Override
 	public int createAccount(String handle) throws IllegalHandleException, InvalidHandleException {
 		//First checks if the newHandle exists in the system, if so, throw IllegalHandleException
-		Boolean flag1 = false;
 		for (Account acc : accountsList){
 			if (acc.getHandle() == handle){
-				flag1 = true;
+				throw new IllegalHandleException();
 			}
 		}
-		if (flag1 == true){
-			throw new IllegalHandleException();
-		}
 		//Check if the new handle is legal within the system spec
-		if (handle == "" || handle == null || handle.length() > 32 || handle.contains(" ")){
+		if (handle == "" || handle == null || handle.length() > 30 || handle.contains(" ")){
 			throw new InvalidHandleException();
 		}
 		//Creates new account object, with only a handle, which is added to accountsList
@@ -39,17 +35,13 @@ public class SocialMedia implements SocialMediaPlatform {
 	@Override
 	public int createAccount(String handle, String description) throws IllegalHandleException, InvalidHandleException {
 		//First checks if the newHandle exists in the system, if so, throw IllegalHandleException
-		Boolean flag1 = false;
 		for (Account acc : accountsList){
 			if (acc.getHandle() == handle){
-				flag1 = true;
+				throw new IllegalHandleException();
 			}
 		}
-		if (flag1 == true){
-			throw new IllegalHandleException();
-		}
 		//Check if the new handle is legal within the system spec
-		if (handle == "" || handle == null || handle.length() > 32 || handle.contains(" ")){
+		if (handle == "" || handle == null || handle.length() > 30 || handle.contains(" ")){
 			throw new InvalidHandleException();
 		}
 		//Creates new account object, with a handle and a description, which is added to accountsList
@@ -117,17 +109,13 @@ public class SocialMedia implements SocialMediaPlatform {
 	public void changeAccountHandle(String oldHandle, String newHandle)
 			throws HandleNotRecognisedException, IllegalHandleException, InvalidHandleException {
 		//First checks if the newHandle exists in the system, if so, throw IllegalHandleException
-		Boolean flag1 = false;
 		for (Account acc : accountsList){
 			if (acc.getHandle() == newHandle){
-				flag1 = true;
+				throw new IllegalHandleException();
 			}
 		}
-		if (flag1 == true){
-			throw new IllegalHandleException();
-		}
 		//Check if the new handle is legal within the system spec
-		if (newHandle == "" || newHandle == null || newHandle.length() > 32 || newHandle.contains(" ")){
+		if (newHandle == "" || newHandle == null || newHandle.length() > 30 || newHandle.contains(" ")){
 			throw new InvalidHandleException();
 		}
 		for (int pos = 0; pos < accountsList.size(); pos++) {
