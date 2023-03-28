@@ -475,7 +475,7 @@ public class SocialMedia implements SocialMediaPlatform {
 			ArrayList<Endorsement> endorsementsList = accountsList.get(pos).getEndorsements();
 			for (int x = 0; x < endorsementsList.size(); x++){
 				if (endorsementsList.get(x).getPostID() == id){
-					return String.format("<pre>\nID: %d\nAccount: %s\nNo. endorsements: N/A | No. comments: N/A\n%s\n</pre>", id, accountsList.get(pos).getHandle(), "Endorses post with post ID " + endorsementsList.get(x).getPostReferenceID());// + " of message: " + endorsementsList.get(x).getMessage()); //this does not work?
+					return String.format("<pre>\nID: %d\nAccount: %s\nNo. endorsements: N/A | No. comments: N/A\n%s\n</pre>", id, accountsList.get(pos).getHandle(), endorsementsList.get(x).getMessage());
 				}
 			}
 		}
