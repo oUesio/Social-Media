@@ -181,15 +181,17 @@ public class SocialMedia implements SocialMediaPlatform {
 	@Override
 	public int createPost(String handle, String message) throws HandleNotRecognisedException, InvalidPostException {
 		//Checks the message is inside the character limit
-		if (message.length() <= 100) {
+		if (message.length() <= 100 && message != "") {
 			for (int pos = 0; pos < accountsList.size(); pos++) {
 				//Finds account with the handle
 				if (accountsList.get(pos).getHandle() == handle) {
 					return accountsList.get(pos).createOriginalPost(message);
 				}
 			}	
+			throw new HandleNotRecognisedException();
+		} else {
+			throw new InvalidPostException();
 		}
-		return -1; //Failed to create
 	}
 
 	@Override
@@ -199,6 +201,7 @@ public class SocialMedia implements SocialMediaPlatform {
 					//Finds account with the handle
 					if (accountsList.get(pos).getHandle() == handle) {
 						int endorseID = -1;
+						boolean notActionable = false;
 						for (Account acc : accountsList) {
 							//Adds endorsement ID to post when the ID of the post being endorsed is found in an account
 							int foundPostIDPos = acc.searchPost(id);
@@ -213,13 +216,22 @@ public class SocialMedia implements SocialMediaPlatform {
 								acc.addEndorseIDtoCommentAt(foundCommentIDPos, endorseID);
 								break;
 							}
+							int foundEndorseIDPos = acc.searchEndorsement(id);
+							if (foundEndorseIDPos != -1) { 
+								notActionable = true;
+								break;
+							}
+						}
+						if (endorseID == -1) {
+							throw new PostIDNotRecognisedException();
+						} else if (notActionable) {
+							throw new NotActionablePostException();
 						}
 						return endorseID;
 					}
 				}
-				return -1;
+				throw new HandleNotRecognisedException();
 			}
-
 	@Override
 	public int commentPost(String handle, int id, String message) throws HandleNotRecognisedException,
 			PostIDNotRecognisedException, NotActionablePostException, InvalidPostException {
