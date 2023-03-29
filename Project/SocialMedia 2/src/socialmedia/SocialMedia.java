@@ -191,7 +191,6 @@ public class SocialMedia implements SocialMediaPlatform {
 					//Finds account with the handle
 					if (accountsList.get(pos).getHandle() == handle) {
 						handleExists = true;
-						System.out.println("KLEIQBWGILNFWIQBFJLWQ");
 						int endorseID = -1;
 						for (Account acc : accountsList) {
 							//Adds endorsement ID to post when the ID of the post being endorsed is found in an account
