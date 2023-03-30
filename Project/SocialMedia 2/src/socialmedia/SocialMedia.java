@@ -36,8 +36,7 @@ public class SocialMedia implements SocialMediaPlatform {
 
 	@Override
 	public int createAccount(String handle, String description) throws IllegalHandleException, InvalidHandleException {
-		// First checks if the newHandle exists in the system, if so, throw
-		// IllegalHandleException
+		// First checks if the newHandle exists in the system, if so, throw IllegalHandleException
 		for (Account acc : accountsList) {
 			if (acc.getHandle() == handle) {
 				throw new IllegalHandleException();
@@ -47,8 +46,7 @@ public class SocialMedia implements SocialMediaPlatform {
 		if (handle == "" || handle == null || handle.length() > 30 || handle.contains(" ")) {
 			throw new InvalidHandleException();
 		}
-		// Creates new account object, with a handle and a description, which is added
-		// to accountsList
+		// Creates new account object, with a handle and a description, which is added to accountsList
 		accountsList.add(new Account(handle, description));
 		return accountsList.get(accountsList.size() - 1).getAccountID();
 	}
@@ -81,8 +79,7 @@ public class SocialMedia implements SocialMediaPlatform {
 				return;
 			}
 		}
-		// If it has looped through here and not returned, then the id must not be in
-		// the system, so throws id not recognised.
+		// If it has looped through here and not returned, then the id must not be in the system, so throws id not recognised.
 		throw new AccountIDNotRecognisedException();
 	}
 
@@ -114,16 +111,14 @@ public class SocialMedia implements SocialMediaPlatform {
 				return;
 			}
 		}
-		// If it has looped through here and not returned, then the handle must not be
-		// in the system, so throws handle not recognised.
+		// If it has looped through here and not returned, then the handle must not be in the system, so throws handle not recognised.
 		throw new HandleNotRecognisedException();
 	}
 
 	@Override
 	public void changeAccountHandle(String oldHandle, String newHandle)
 			throws HandleNotRecognisedException, IllegalHandleException, InvalidHandleException {
-		// First checks if the newHandle exists in the system, if so, throw
-		// IllegalHandleException
+		// First checks if the newHandle exists in the system, if so, throw IllegalHandleException
 		for (Account acc : accountsList) {
 			if (acc.getHandle() == newHandle) {
 				throw new IllegalHandleException();
@@ -141,8 +136,7 @@ public class SocialMedia implements SocialMediaPlatform {
 				return;
 			}
 		}
-		// If it has looped through here and not returned, then the oldHandle must not
-		// be in the system, so throws handle not recognised.
+		// If it has looped through here and not returned, then the oldHandle must not be in the system, so throws handle not recognised.
 		throw new HandleNotRecognisedException();
 	}
 
@@ -156,8 +150,7 @@ public class SocialMedia implements SocialMediaPlatform {
 				return;
 			}
 		}
-		// If it has looped through here and not returned, then the handle must not be
-		// in the system, so throws handle not recognised.
+		// If it has looped through here and not returned, then the handle must not be in the system, so throws handle not recognised.
 		throw new HandleNotRecognisedException();
 	}
 
@@ -183,8 +176,7 @@ public class SocialMedia implements SocialMediaPlatform {
 						totalEndorsements);
 			}
 		}
-		// If it has looped through here and not returned, then the handle must not be
-		// in the system, so throws handle not recognised.
+		// If it has looped through here and not returned, then the handle must not be in the system, so throws handle not recognised.
 		throw new HandleNotRecognisedException();
 	}
 
@@ -215,8 +207,7 @@ public class SocialMedia implements SocialMediaPlatform {
 				handleExists = true;
 				int endorseID = -1;
 				for (Account acc : accountsList) {
-					// Adds endorsement ID to post when the ID of the post being endorsed is found
-					// in an account
+					// Adds endorsement ID to post when the ID of the post being endorsed is found in an account
 					int foundPostIDPos = acc.searchPost(id);
 					if (foundPostIDPos != -1) {
 						endorseID = accountsList.get(pos).createEndorsement("EP@" + acc.getHandle() + ": "
@@ -264,8 +255,7 @@ public class SocialMedia implements SocialMediaPlatform {
 					handleExists = true;
 					int commentID = -1;
 					for (Account acc : accountsList) {
-						// Adds comment ID to post when the ID of the post being commented is found in
-						// an account
+						// Adds comment ID to post when the ID of the post being commented is found in an account
 						int foundPostIDPos = acc.searchPost(id);
 						if (foundPostIDPos != -1) {
 							postIDExists = true;
@@ -507,8 +497,7 @@ public class SocialMedia implements SocialMediaPlatform {
 						commentFound = true;
 					}
 				}
-				// Stops early when all endorsements are deleted and the ID has been removef
-				// from reference post
+				// Stops early when all endorsements are deleted and the ID has been removed from reference post
 				if (oldEndorsements.size() == 0 && commentFound) {
 					break;
 				}
@@ -650,12 +639,12 @@ public class SocialMedia implements SocialMediaPlatform {
 					checkedElements.add(id);
 					StringBuilder string = new StringBuilder();
 					String tab = "\t";
-					int changeableIndentationNumber = indentationNumber; // ?????
-					changeableIndentationNumber = indentationNumber; // ????? why is this line needed?
+					int changeableIndentationNumber = indentationNumber;
+					changeableIndentationNumber = indentationNumber;
 					if (changeableIndentationNumber != 0) {
 						string.append("\n");
 					}
-					changeableIndentationNumber = indentationNumber; // ?????
+					changeableIndentationNumber = indentationNumber;
 					while (changeableIndentationNumber > 1) {
 						string.append(tab);
 						changeableIndentationNumber -= 1;
@@ -715,9 +704,8 @@ public class SocialMedia implements SocialMediaPlatform {
 				}
 			}
 			ArrayList<Comment> commentsList = accountsList.get(pos).getComments();
-			for (int x = 0; x < commentsList.size(); x++) { // for every comment in comments list
-				if (commentsList.get(x).getPostID() == id && !checkedElements.contains(id)) { // if the comment has the
-																								// ID we are looking for
+			for (int x = 0; x < commentsList.size(); x++) {
+				if (commentsList.get(x).getPostID() == id && !checkedElements.contains(id)) {																	// ID we are looking for
 					checkedElements.add(id);
 					StringBuilder string = new StringBuilder();
 					String tab = "\t";
@@ -829,10 +817,8 @@ public class SocialMedia implements SocialMediaPlatform {
 			}
 		}
 		ArrayList<DeletedComment> deleteCommentsListObj = deletedCommentsList;
-		for (int x = 0; x < deleteCommentsListObj.size(); x++) { // for every comment in comments list
-			if (deleteCommentsListObj.get(x).getPostID() == id && !checkedElements.contains(id)) { // if the comment has
-																									// the ID we are
-																									// looking for
+		for (int x = 0; x < deleteCommentsListObj.size(); x++) {
+			if (deleteCommentsListObj.get(x).getPostID() == id && !checkedElements.contains(id)) {																				// looking for
 				checkedElements.add(id);
 				StringBuilder string = new StringBuilder();
 				String tab = "\t";
@@ -935,10 +921,8 @@ public class SocialMedia implements SocialMediaPlatform {
 			}
 		}
 		ArrayList<DeletedPost> deletePostsListObj = deletedPostsList;
-		for (int x = 0; x < deletePostsListObj.size(); x++) { // for every comment in comments list
-			if (deletePostsListObj.get(x).getPostID() == id && !checkedElements.contains(id)) { // if the comment has
-																								// the ID we are looking
-																								// for
+		for (int x = 0; x < deletePostsListObj.size(); x++) {
+			if (deletePostsListObj.get(x).getPostID() == id && !checkedElements.contains(id)) {																			// for
 				checkedElements.add(id);
 				StringBuilder string = new StringBuilder();
 				String tab = "\t";
@@ -1081,9 +1065,7 @@ public class SocialMedia implements SocialMediaPlatform {
 	}
 
 	@Override
-	public int getMostEndorsedPost() { // cannot check yet, endorsements not working, may have to replace the
-										// "postsList.get(x).getEndorsementsList().size()"/similar lines with something
-										// more if not done as needed
+	public int getMostEndorsedPost() {
 		// Stores the number of endorsements of the currently most endorsed post
 		int largestNumber = 0;
 		// Stores the ID of the most endorsed post
@@ -1111,7 +1093,7 @@ public class SocialMedia implements SocialMediaPlatform {
 	}
 
 	@Override
-	public int getMostEndorsedAccount() { // cannot check yet, endorsements not working
+	public int getMostEndorsedAccount() {
 		int maxNumberOfEndorsements = 0;
 		int mostEndorsedID = -1;
 		for (int pos = 0; pos < accountsList.size(); pos++) {
