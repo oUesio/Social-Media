@@ -1,6 +1,8 @@
 package socialmedia;
 
 public class Endorsement extends Post {
+    private static final long serialVersionUID = 4L;
+    
     private int postReferenceID;
 
     public Endorsement(int accountID, String message, int postReferenceID) {
@@ -11,5 +13,4 @@ public class Endorsement extends Post {
     public int getPostReferenceID(){
         return postReferenceID;
     }
-    //do we do checks here to see if account/other info is valid?
 }
