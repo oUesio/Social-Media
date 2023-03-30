@@ -1,3 +1,4 @@
+package socialmedia;
 
 public class Endorsement extends Post {
     private int postReferenceID;
