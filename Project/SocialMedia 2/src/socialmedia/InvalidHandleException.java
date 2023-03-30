@@ -1,3 +1,4 @@
+package socialmedia;
 
 /**
  * Thrown when attempting to assign an account handle empty or having more than
