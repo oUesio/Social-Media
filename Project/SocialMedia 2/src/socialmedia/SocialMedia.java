@@ -1120,7 +1120,7 @@ public class SocialMedia implements SocialMediaPlatform {
 		// Resets post counter
 		for (Account acc : accountsList) {
 			if (acc.getOriginalPosts().size() != 0) {
-				// Not called if there are no exisiting posts, so the counter was not changed
+				// Not called if there are no existing posts, so the counter was not changed
 				acc.getOriginalPosts().get(0).resetNumberOfPosts();
 				break;
 			}
