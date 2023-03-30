@@ -87,7 +87,6 @@ public class Account implements Serializable {
         commentsList.remove(pos);
     }
     
-    
     public int searchPost(int id) {
         for (int pos = 0; pos < originalPostList.size(); pos++) {
             if (originalPostList.get(pos).getPostID() == id) {
