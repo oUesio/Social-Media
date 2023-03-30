@@ -300,7 +300,7 @@ public class SocialMedia implements SocialMediaPlatform {
 			accPos++;
 		}
 		//Throws exception if the object doesn't exist
-		if (postPos != -1 && endorsePos != -1 && commentPos != -1) {
+		if (postPos == -1 && endorsePos == -1 && commentPos == -1) {
 			throw new PostIDNotRecognisedException();
 		}
 		//ID found in original posts
