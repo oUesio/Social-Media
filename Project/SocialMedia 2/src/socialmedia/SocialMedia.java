@@ -1065,7 +1065,7 @@ public class SocialMedia implements SocialMediaPlatform {
 	@Override
 	public int getMostEndorsedPost() {
 		// Stores the number of endorsements of the currently most endorsed post
-		int largestNumber = 0;
+		int largestNumber = -1;
 		// Stores the ID of the most endorsed post
 		int mostEndorsedPostID = -1;
 		for (int pos = 0; pos < accountsList.size(); pos++) {
@@ -1092,7 +1092,7 @@ public class SocialMedia implements SocialMediaPlatform {
 
 	@Override
 	public int getMostEndorsedAccount() {
-		int maxNumberOfEndorsements = 0;
+		int maxNumberOfEndorsements = -1;
 		int mostEndorsedID = -1;
 		for (int pos = 0; pos < accountsList.size(); pos++) {
 			// Stores the total number of endorsements for an account
