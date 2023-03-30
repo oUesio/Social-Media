@@ -26,8 +26,7 @@ public class SocialMedia implements SocialMediaPlatform {
 		if (handle == "" || handle == null || handle.length() > 30 || handle.contains(" ")) {
 			throw new InvalidHandleException();
 		}
-		// Creates new account object, with only a handle, which is added to
-		// accountsList
+		// Creates new account object, with only a handle, which is added to accountsList
 		accountsList.add(new Account(handle));
 		return accountsList.get(accountsList.size() - 1).getAccountID();
 
