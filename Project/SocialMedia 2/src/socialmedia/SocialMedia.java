@@ -73,6 +73,7 @@ public class SocialMedia implements SocialMediaPlatform {
 				}
 				//Deletes the account with the id
 				accountsList.remove(accountsList.get(accPos));
+				return;
 			}
 		}
 		//If it has looped through here and not returned, then the id must not be in the system, so throws id not recognised.
@@ -103,6 +104,7 @@ public class SocialMedia implements SocialMediaPlatform {
 				}
 				//Deletes the account with the handle
 				accountsList.remove(accountsList.get(accPos));
+				return;
 			}
 		}
 		//If it has looped through here and not returned, then the handle must not be in the system, so throws handle not recognised.
