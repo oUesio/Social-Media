@@ -181,7 +181,7 @@ public class SocialMedia implements SocialMediaPlatform {
 	@Override
 	public int createPost(String handle, String message) throws HandleNotRecognisedException, InvalidPostException {
 		// Checks the message is inside the character limit
-		if (message.length() <= 100 && message != "") {
+		if (message.length() <= 100 && message != "" && message != null) {
 			for (int pos = 0; pos < accountsList.size(); pos++) {
 				// Finds account with the handle
 				if (accountsList.get(pos).getHandle() == handle) {
@@ -244,7 +244,7 @@ public class SocialMedia implements SocialMediaPlatform {
 	public int commentPost(String handle, int id, String message) throws HandleNotRecognisedException,
 			PostIDNotRecognisedException, NotActionablePostException, InvalidPostException {
 		// Checks the message is inside the character limit
-		if (message.length() <= 100 && message != "") {
+		if (message.length() <= 100 && message != "" && message != null) {
 			boolean handleExists = false;
 			boolean postIDExists = false;
 			boolean notActionable = false;
