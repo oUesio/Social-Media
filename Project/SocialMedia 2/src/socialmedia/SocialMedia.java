@@ -75,6 +75,8 @@ public class SocialMedia implements SocialMediaPlatform {
 				accountsList.remove(accountsList.get(accPos));
 			}
 		}
+		//If it has looped through here and not returned, then the id must not be in the system, so throws id not recognised.
+		throw new AccountIDNotRecognisedException();
 	}
 
 	@Override
@@ -103,6 +105,8 @@ public class SocialMedia implements SocialMediaPlatform {
 				accountsList.remove(accountsList.get(accPos));
 			}
 		}
+		//If it has looped through here and not returned, then the handle must not be in the system, so throws handle not recognised.
+		throw new HandleNotRecognisedException();
 	}
 
 	@Override
