@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Post implements Serializable {
+    private static final long serialVersionUID = 2L;
+    
     private int postID;
     protected static int numberOfPosts = 0;
     private int accountID;
