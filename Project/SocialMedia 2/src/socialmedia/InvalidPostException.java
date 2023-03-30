@@ -1,4 +1,4 @@
-
+package socialmedia;
 /**
  * Thrown when attempting to create a post which the message is empty or has
  * more characters than the system's limit.
